@@ -107,6 +107,9 @@ figcaption{font-size:13px;color:var(--ink-2);line-height:1.45}
 .sect h2{font-family:var(--display);font-size:clamp(28px,3.6vw,40px);font-weight:800}
 .sect p{color:var(--ink-2);font-size:14px}
 .index .grp{display:block;padding:18px 0 6px;border-bottom:1px solid var(--rule)}
+a.btn{text-decoration:none;display:inline-block}
+.side{display:flex;flex-direction:column;gap:20px}
+.me{width:132px;height:auto;aspect-ratio:4/5;object-fit:cover;border-radius:12px;border:1px solid var(--rule)}
 .shots{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1fr) minmax(0,1.5fr);gap:20px;align-items:start}
 
 table{border-collapse:collapse;width:100%;font-size:14px}
@@ -183,20 +186,24 @@ footer h2{font-size:clamp(28px,4vw,44px);font-weight:800}
 <div class="wrap">
   <header class="top">
     <span class="mono">Ilia Samarin — Product &amp; Human-Computer Interaction</span>
-    <nav aria-label="Sections"><a href="#work">Work</a><a href="#experience">Experience</a><a href="#contact">Contact</a></nav>
+    <nav aria-label="Sections"><a href="#work">Work</a><a href="#experience">Experience</a><a href="Ilia_Samarin_Resume.pdf" target="_blank" rel="noopener">Résumé</a><a href="#contact">Contact</a></nav>
   </header>
 
   <section class="intro">
     <div>
       <h1>I study how people actually use things, <span>then build what they need.</span></h1>
       <p class="lede">I run user research, write specs, and prototype what the research says to build.</p>
+      <div class="btns" style="margin-top:24px"><a class="btn" href="Ilia_Samarin_Resume.pdf" target="_blank" rel="noopener">View résumé (PDF)</a><a class="btn ghost" href="#work">See work</a></div>
     </div>
+    <div class="side">
+    <img class="me" src="img/ilia.jpg?v=3" alt="Ilia Samarin">
     <dl class="facts">
       <div><dt class="label">School</dt><dd>Carnegie Mellon, Tepper. B.S. Business (Finance) + Human-Computer Interaction. Dec 2027</dd></div>
       <div><dt class="label">Now</dt><dd>Product at Terac. Director, CMU Product Management Academy. Founder, <a href="https://www.oryn-shop.com/" target="_blank" rel="noopener">Oryn</a></dd></div>
       <div><dt class="label">Seeking</dt><dd>PM internships, Summer 2027</dd></div>
       <div><dt class="label">Tools</dt><dd>Figma, Python, R, Anthropic API, Notion</dd></div>
     </dl>
+    </div>
   </section>
 
   <nav class="index" id="work" aria-label="Selected work">
@@ -458,6 +465,7 @@ footer h2{font-size:clamp(28px,4vw,44px);font-weight:800}
     </div>
     <div class="mono" style="display:flex;flex-direction:column;gap:6px">
       <a href="https://www.linkedin.com/in/iliasamarin" target="_blank" rel="noopener">linkedin.com/in/iliasamarin</a>
+      <a href="Ilia_Samarin_Resume.pdf" target="_blank" rel="noopener">Résumé (PDF)</a>
       <span>Pittsburgh, PA</span>
     </div>
   </footer>
