@@ -20,7 +20,7 @@
   --rule:#D6D9D2;
   --cobalt:#2340D8;     /* single accent */
   --mark:#F3DB4C;       /* highlighter, used only as annotation */
-  --mark-ink:#15181D;
+  --mark-ink:#15181D; --mark-bg:linear-gradient(transparent 55%, #F3DB4C 55%);
   --ok:#1E7A4C;
   --watch:#0F1A33; --key:#24314F; --key-hi:#33446B; --del:#D9483B; --space:#2F6BEA; --sugg:#3E8BFF;
   --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
@@ -29,10 +29,10 @@
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --paper:#121417; --sheet:#181B1F; --ink:#ECEDE8; --ink-2:#A2A8B2; --rule:#2C3036;
-  --cobalt:#7D93FF; --mark:#E2C93A; --mark-ink:#121417; --ok:#5CC48C; color-scheme:dark}}
+  --cobalt:#7D93FF; --mark:#E2C93A; --mark-ink:#121417; --mark-bg:rgba(226,201,58,.24); --ok:#5CC48C; color-scheme:dark}}
 :root[data-theme="dark"]{
   --paper:#121417; --sheet:#181B1F; --ink:#ECEDE8; --ink-2:#A2A8B2; --rule:#2C3036;
-  --cobalt:#7D93FF; --mark:#E2C93A; --mark-ink:#121417; --ok:#5CC48C; color-scheme:dark}
+  --cobalt:#7D93FF; --mark:#E2C93A; --mark-ink:#121417; --mark-bg:rgba(226,201,58,.24); --ok:#5CC48C; color-scheme:dark}
 
 *{box-sizing:border-box}
 body{background:var(--paper);color:var(--ink);font:400 16px/1.6 var(--body);
@@ -44,7 +44,7 @@ h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-0
 p{margin:0}
 .mono{font-family:var(--mono);font-size:13px;letter-spacing:.01em}
 .label{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
-mark{background:linear-gradient(transparent 55%, var(--mark) 55%);color:inherit;padding:0 2px}
+mark{background:var(--mark-bg);color:inherit;padding:0 3px;border-radius:3px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 
 /* top bar */
 .top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:22px;border-bottom:1px solid var(--rule);flex-wrap:wrap}
