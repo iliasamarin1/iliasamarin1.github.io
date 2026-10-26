@@ -101,6 +101,12 @@ figcaption{font-size:13px;color:var(--ink-2);line-height:1.45}
 .duo{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:32px;align-items:center}
 .duo figure img{border:0;background:none}
 @media (max-width:560px){.duo{grid-template-columns:1fr}.duo figure{max-width:240px}}
+.own{display:grid;gap:6px;font-size:15px;max-width:44em;border-left:2px solid var(--cobalt);padding-left:14px}
+.own b{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--cobalt);font-weight:500;margin-right:6px}
+.sect{display:flex;align-items:baseline;justify-content:space-between;gap:16px;border-top:1px solid var(--ink);padding-top:56px;margin-top:24px}
+.sect h2{font-family:var(--display);font-size:clamp(28px,3.6vw,40px);font-weight:800}
+.sect p{color:var(--ink-2);font-size:14px}
+.index .grp{display:block;padding:18px 0 6px;border-bottom:1px solid var(--rule)}
 .shots{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1fr) minmax(0,1.5fr);gap:20px;align-items:start}
 
 table{border-collapse:collapse;width:100%;font-size:14px}
@@ -194,10 +200,12 @@ footer h2{font-size:clamp(28px,4vw,44px);font-weight:800}
   </section>
 
   <nav class="index" id="work" aria-label="Selected work">
-    <a href="#genai"><span class="mono">01</span><span class="t">How students trust ChatGPT</span><span class="kk">User research</span></a>
-    <a href="#perflection"><span class="mono">02</span><span class="t">SneakySwing for Perflection AI</span><span class="kk">Customer discovery</span></a>
+    <span class="grp label">Featured</span>
+    <a href="#perflection"><span class="mono">01</span><span class="t">SneakySwing for Perflection AI</span><span class="kk">Customer discovery</span></a>
+    <a href="#genai"><span class="mono">02</span><span class="t">How students trust ChatGPT</span><span class="kk">User research</span></a>
     <a href="#watch"><span class="mono">03</span><span class="t">Typing on a one-inch screen</span><span class="kk">Playable prototype</span></a>
     <a href="#oryn"><span class="mono">04</span><span class="t">Oryn, a brand I launched</span><span class="kk">Zero to one</span></a>
+    <span class="grp label">More work</span>
     <a href="#fiturnly"><span class="mono">05</span><span class="t">Fiturnly fit intelligence</span><span class="kk">PRD</span></a>
     <a href="#mentorship"><span class="mono">06</span><span class="t">LinkedIn Mentorship Hub</span><span class="kk">Product strategy</span></a>
     <a href="#ixd"><span class="mono">07</span><span class="t">Chefstack and StudyConnect</span><span class="kk">Interaction design</span></a>
@@ -205,35 +213,9 @@ footer h2{font-size:clamp(28px,4vw,44px);font-weight:800}
   </nav>
 
   <!-- 01 -->
-  <article class="case" id="genai">
-    <aside class="rail">
-      <span class="num">01 / User research</span>
-      <dl>
-        <div><dt>Role</dt><dd>User researcher, team of 6</dd></div>
-        <div><dt>When</dt><dd>Fall 2026</dd></div>
-        <div><dt>Methods</dt><dd>Heuristic evaluation, 12 think-aloud tests, affinity mapping</dd></div>
-      </dl>
-    </aside>
-    <div class="body">
-      <h2>Do students notice when ChatGPT is wrong? Mostly, no.</h2>
-      <div class="readout">
-        <div><b>0 / 12</b><span>noticed what the summary left out</span></div>
-        <div><b>4 / 12</b><span>checked the source</span></div>
-        <div><b>33%</b><span>found the regenerate button</span></div>
-      </div>
-      <ul>
-        <li><mark>Long, well-formatted answers hide omissions.</mark> People skim the bold text and trust the structure.</li>
-        <li>When ChatGPT accepted a wrong correction, two participants accepted it too.</li>
-        <li>9 of 12 valued speed, so any fix has to add almost no friction.</li>
-      </ul>
-      <p class="hmw"><span class="label">Where we landed</span>How might we help students catch what ChatGPT leaves out or changes, without slowing them down?</p>
-    </div>
-  </article>
-
-  <!-- 02 -->
   <article class="case" id="perflection">
     <aside class="rail">
-      <span class="num">02 / Customer discovery</span>
+      <span class="num">01 / Customer discovery</span>
       <dl>
         <div><dt>Client</dt><dd>Perflection AI, via CMU Product Management Academy</dd></div>
         <div><dt>Role</dt><dd>Team lead; also ran the 5-team cohort</dd></div>
@@ -242,6 +224,7 @@ footer h2{font-size:clamp(28px,4vw,44px);font-weight:800}
     </aside>
     <div class="body">
       <h2>SneakySwing: our retention hypothesis was wrong</h2>
+      <div class="own"><p><b>My part</b>Led a team of 5 through on-course interviews at Bob O'Connor and the final report, while running the 5-team cohort as Project Director.</p><p><b>Key call</b>Pointed the founders at beginners instead of the strong golfers they were targeting, because strong golfers had zero willingness to pay.</p></div>
       <p class="sum">An AI golf coach with a live MVP. We ran 11 interviews, 7 of them on the course, to test usability, trust and retention.</p>
       <div class="tbl"><table>
         <thead><tr><th>Hypothesis</th><th>Result</th><th>What we heard</th></tr></thead>
@@ -262,6 +245,33 @@ footer h2{font-size:clamp(28px,4vw,44px);font-weight:800}
     </div>
   </article>
 
+  <!-- 02 -->
+  <article class="case" id="genai">
+    <aside class="rail">
+      <span class="num">02 / User research</span>
+      <dl>
+        <div><dt>Role</dt><dd>User researcher, team of 6</dd></div>
+        <div><dt>When</dt><dd>Fall 2026</dd></div>
+        <div><dt>Methods</dt><dd>Heuristic evaluation, 12 think-aloud tests, affinity mapping</dd></div>
+      </dl>
+    </aside>
+    <div class="body">
+      <h2>Do students notice when ChatGPT is wrong? Mostly, no.</h2>
+      <div class="own"><p><b>My part</b>Ran the heuristic evaluation of ChatGPT and co-ran the 12-person usability study with five teammates.</p><p><b>Key call</b>Any fix had to cost almost no time, because speed is the reason students use ChatGPT.</p></div>
+      <div class="readout">
+        <div><b>0 / 12</b><span>noticed what the summary left out</span></div>
+        <div><b>4 / 12</b><span>checked the source</span></div>
+        <div><b>33%</b><span>found the regenerate button</span></div>
+      </div>
+      <ul>
+        <li><mark>Long, well-formatted answers hide omissions.</mark> People skim the bold text and trust the structure.</li>
+        <li>When ChatGPT accepted a wrong correction, two participants accepted it too.</li>
+        <li>9 of 12 valued speed, so any fix has to add almost no friction.</li>
+      </ul>
+      <p class="hmw"><span class="label">Where we landed</span>How might we help students catch what ChatGPT leaves out or changes, without slowing them down?</p>
+    </div>
+  </article>
+
   <!-- 03 -->
   <article class="case" id="watch">
     <aside class="rail">
@@ -273,6 +283,7 @@ footer h2{font-size:clamp(28px,4vw,44px);font-weight:800}
     </aside>
     <div class="body">
       <h2>Typing on a one-inch screen</h2>
+      <div class="own"><p><b>My part</b>Designed, built and tested the keyboard in Processing.</p><p><b>Key call</b>Cut the OK button. It added a tap to every phrase and prevented nothing.</p></div>
       <p class="sum">My final smartwatch keyboard, rebuilt so you can try it. Tap the keys or the blue suggestion bar.</p>
 
       <div class="lab">
@@ -316,6 +327,7 @@ footer h2{font-size:clamp(28px,4vw,44px);font-weight:800}
     </aside>
     <div class="body">
       <h2>Oryn: an iron supplement built from 3,600 customer voices</h2>
+      <div class="own"><p><b>My part</b>Everything: customer research, product, store, pricing and ads.</p><p><b>Key call</b>Dropped beef liver when no supplier could make it, and launched a simpler product rather than wait.</p></div>
       <p class="sum">Before building, I read Reddit, YouTube, TikTok and Amazon reviews from women who are tired in a way sleep doesn't fix.</p>
       <div class="two">
         <div>
@@ -336,6 +348,8 @@ footer h2{font-size:clamp(28px,4vw,44px);font-weight:800}
       </div>
     </div>
   </article>
+
+  <div class="sect" id="more"><h2>More work</h2><p>Specs, strategy and design projects</p></div>
 
   <!-- 05 -->
   <article class="case" id="fiturnly">
