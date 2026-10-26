@@ -1,0 +1,683 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Ilia Samarin: product and HCI portfolio. User research, product specs and prototypes.">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Ilia Samarin</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a research notebook. Narrow reading column, a left meta rail per case (role, n, methods), findings set like lab readouts, one live prototype as the centerpiece. */
+:root{
+  --paper:#F3F4F0;      /* cool off-white, slight green bias */
+  --sheet:#FBFBF8;
+  --ink:#15181D;
+  --ink-2:#4A505B;
+  --rule:#D6D9D2;
+  --cobalt:#2340D8;     /* single accent */
+  --mark:#F3DB4C;       /* highlighter, used only as annotation */
+  --mark-ink:#15181D;
+  --ok:#1E7A4C;
+  --watch:#0F1A33; --key:#24314F; --key-hi:#33446B; --del:#D9483B; --space:#2F6BEA; --sugg:#3E8BFF;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --body:"Public Sans", "Helvetica Neue", Arial, system-ui, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#121417; --sheet:#181B1F; --ink:#ECEDE8; --ink-2:#A2A8B2; --rule:#2C3036;
+  --cobalt:#7D93FF; --mark:#E2C93A; --mark-ink:#121417; --ok:#5CC48C; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#121417; --sheet:#181B1F; --ink:#ECEDE8; --ink-2:#A2A8B2; --rule:#2C3036;
+  --cobalt:#7D93FF; --mark:#E2C93A; --mark-ink:#121417; --ok:#5CC48C; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.6 var(--body);
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));}
+.wrap{max-width:1080px;margin:0 auto}
+a{color:var(--cobalt);text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--cobalt);outline-offset:3px;border-radius:4px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-0.01em}
+p{margin:0}
+.mono{font-family:var(--mono);font-size:13px;letter-spacing:.01em}
+.label{font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+mark{background:linear-gradient(transparent 55%, var(--mark) 55%);color:inherit;padding:0 2px}
+
+/* top bar */
+.top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:22px;border-bottom:1px solid var(--rule);flex-wrap:wrap}
+.top nav{display:flex;gap:20px;flex-wrap:wrap}
+.top nav a{color:var(--ink);text-decoration:none;font-size:14px}
+.top nav a:hover{color:var(--cobalt)}
+
+/* intro */
+.intro{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:48px;padding-block:64px 56px;align-items:end}
+.intro h1{font-size:clamp(40px,6.4vw,76px);line-height:.98;font-weight:800}
+.intro h1 span{color:var(--cobalt)}
+.intro .lede{font-size:19px;max-width:34em;margin-top:24px;color:var(--ink)}
+.facts{display:grid;gap:0;border-top:1px solid var(--ink)}
+.facts div{display:grid;grid-template-columns:110px minmax(0,1fr);gap:12px;padding-block:10px;border-bottom:1px solid var(--rule);font-size:14px}
+.facts dt{margin:0}.facts dd{margin:0}
+
+/* index */
+.index{border-top:1px solid var(--ink);margin-bottom:24px}
+.index a{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:16px;align-items:baseline;padding-block:14px;border-bottom:1px solid var(--rule);color:var(--ink);text-decoration:none}
+.index a:hover .t{color:var(--cobalt)}
+.index .t{font-family:var(--display);font-size:22px;font-weight:600}
+.index .kk{color:var(--ink-2);font-size:14px;text-align:right}
+
+/* case */
+.case{display:grid;grid-template-columns:220px minmax(0,1fr);gap:48px;padding-block:72px;border-top:1px solid var(--rule)}
+.case:first-of-type{border-top:0}
+.rail{display:flex;flex-direction:column;gap:18px;align-self:start;position:sticky;top:calc(env(safe-area-inset-top, 0px) + 20px)}
+.rail .num{font-family:var(--mono);font-size:13px;color:var(--cobalt)}
+.rail dl{margin:0;display:flex;flex-direction:column;gap:14px}
+.rail dt{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2)}
+.rail dd{margin:2px 0 0;font-size:14px;line-height:1.45}
+.body{display:flex;flex-direction:column;gap:28px;min-width:0}
+.body h2{font-size:clamp(30px,4vw,44px);font-weight:800;line-height:1.05}
+.body .sum{font-size:19px;max-width:36em}
+.body h3{font-size:18px;font-weight:600;margin-bottom:8px}
+.body p{max-width:40em}
+.body ul{margin:0;padding-left:20px;max-width:40em;display:flex;flex-direction:column;gap:6px}
+
+/* readouts */
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border-top:1px solid var(--ink);border-bottom:1px solid var(--rule)}
+.readout div{padding:16px 16px 16px 0;display:flex;flex-direction:column;gap:6px}
+.readout b{font-family:var(--display);font-size:38px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.readout span{font-size:13.5px;color:var(--ink-2);line-height:1.4}
+
+.hmw{background:var(--sheet);border:1px solid var(--rule);padding:22px 24px;font-family:var(--display);font-size:22px;line-height:1.3;max-width:34em}
+.hmw .label{display:block;margin-bottom:8px;font-family:var(--mono)}
+
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}
+figure{margin:0;display:flex;flex-direction:column;gap:10px;min-width:0}
+figure img{display:block;width:100%;height:auto;border:1px solid var(--rule);background:var(--sheet)}
+figcaption{font-size:13px;color:var(--ink-2);line-height:1.45}
+.strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
+.strip img{aspect-ratio:9/17;object-fit:cover;object-position:top;border-radius:10px}
+.shots{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1fr) minmax(0,1.5fr);gap:20px;align-items:start}
+
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{text-align:left;padding:9px 12px 9px 0;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-2);font-weight:500;border-bottom-color:var(--ink)}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.tbl{overflow-x:auto}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font-family:var(--mono);font-size:12px;border:1px solid var(--rule);padding:4px 9px;border-radius:999px;color:var(--ink-2)}
+.p0{color:var(--cobalt);border-color:var(--cobalt)}
+
+/* watch demo */
+.lab{display:grid;grid-template-columns:auto minmax(0,1fr);gap:36px;align-items:center;background:var(--sheet);border:1px solid var(--rule);padding:28px}
+.watch{width:300px;max-width:100%;aspect-ratio:1;position:relative;border-radius:46px;background:#0A0F1E;padding:18px;box-shadow:0 0 0 6px #2A2F3A, 0 18px 40px -18px rgba(0,0,0,.5)}
+.screen{width:100%;height:100%;background:var(--watch);border-radius:30px;display:flex;flex-direction:column;gap:5px;padding:10px;position:relative;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+.disp{background:#0A1226;border-radius:7px;color:#E6ECFF;font:500 12px/1 var(--mono);padding:7px 8px;white-space:nowrap;overflow:hidden;direction:rtl;text-align:left;height:26px}
+.disp span{direction:ltr;unicode-bidi:plaintext}
+.sugg{height:22px;border-radius:7px;background:#16213D;border:0;color:#7E8AA8;font:500 11px/1 var(--mono);text-align:left;padding:0 8px;cursor:pointer}
+.sugg.on{background:var(--sugg);color:#fff}
+.sugg .pre{opacity:.7}
+.rows{display:flex;flex-direction:column;gap:4px;flex:1}
+.row{display:flex;gap:3px;justify-content:center;flex:1}
+.k{flex:0 0 calc((100% - 27px)/10);border:0;border-radius:6px;background:var(--key);color:#E9EEFF;font:600 12px/1 var(--body);box-shadow:inset 0 1px 0 rgba(255,255,255,.12);cursor:pointer;padding:0}
+.k:hover,.k:active{background:var(--key-hi)}
+.bottom{display:flex;gap:4px;flex:1.05}
+.bottom .k{flex:1}
+.k.del{flex:0 0 26%;background:var(--del);font-size:15px}
+.k.sp{background:var(--space);position:relative}
+.k.sp::after{content:"";position:absolute;left:28%;right:28%;bottom:30%;height:2px;border-radius:2px;background:rgba(255,255,255,.8)}
+.preview{position:absolute;pointer-events:none;background:#0A1226;border:2px solid var(--sugg);color:#fff;font:700 22px/1 var(--body);border-radius:8px;width:40px;height:44px;display:grid;place-items:center;transform:translate(-50%,-115%)}
+.trial{display:flex;flex-direction:column;gap:14px;min-width:0}
+.target{font-family:var(--mono);font-size:17px;line-height:1.5;word-break:break-word}
+.target .ok{color:var(--ok)}.target .bad{color:#C2412D;text-decoration:underline}
+.typed{font-family:var(--mono);font-size:14px;color:var(--ink-2);min-height:1.5em;word-break:break-word}
+.stats{display:flex;gap:28px;flex-wrap:wrap}
+.stats b{display:block;font-family:var(--display);font-size:30px;line-height:1;font-variant-numeric:tabular-nums}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn{font:600 14px/1 var(--body);padding:11px 16px;border-radius:999px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink)}
+.hint{font-size:13px;color:var(--ink-2)}
+
+/* experience */
+.xp{padding-block:72px;border-top:1px solid var(--ink)}
+.xp h2{font-size:clamp(28px,3.6vw,40px);font-weight:800;margin-bottom:24px}
+.xp .tbl td:first-child{white-space:nowrap}
+.more{padding-block:0 72px}
+.more h2{font-size:clamp(24px,3vw,32px);font-weight:800;margin-bottom:18px}
+footer{border-top:1px solid var(--ink);padding-block:40px 64px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end}
+footer h2{font-size:clamp(28px,4vw,44px);font-weight:800}
+.copy{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px}
+.copy code{font-family:var(--mono);font-size:15px;user-select:all;background:var(--sheet);border:1px solid var(--rule);padding:8px 12px;border-radius:6px}
+
+@media (max-width:860px){
+  .intro{grid-template-columns:1fr;gap:32px;padding-block:44px}
+  .case{grid-template-columns:1fr;gap:24px;padding-block:52px}
+  .rail{position:static}
+  .rail dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .two{grid-template-columns:1fr}
+  .shots{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .shots figure:last-child{grid-column:1/-1}
+  .lab{grid-template-columns:1fr;justify-items:center;padding:20px}
+  .trial{width:100%}
+  footer{grid-template-columns:1fr}
+  .index .kk{display:none}
+}
+@media (max-width:860px){.strip{grid-template-columns:repeat(5,minmax(150px,1fr));overflow-x:auto;padding-bottom:6px}}
+@media (max-width:480px){.watch{width:272px;padding:14px}.index a{grid-template-columns:34px minmax(0,1fr)}}
+@media (prefers-reduced-motion:no-preference){.index a,.btn{transition:color .15s,background .15s}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <span class="mono">Ilia Samarin — Product &amp; HCI</span>
+    <nav aria-label="Sections"><a href="#work">Work</a><a href="#experience">Experience</a><a href="#contact">Contact</a></nav>
+  </header>
+
+  <section class="intro">
+    <div>
+      <h1>I study how people actually use things, <span>then build what they need.</span></h1>
+      <p class="lede">I'm a junior at Carnegie Mellon studying business and Human-Computer Interaction. I run user research, write product specs, and prototype the result, and I like work where the research changes the plan.</p>
+    </div>
+    <dl class="facts">
+      <div><dt class="label">School</dt><dd>Carnegie Mellon, Tepper. B.S. Business (Finance) + HCI major. Graduating Dec 2027</dd></div>
+      <div><dt class="label">Now</dt><dd>Product, Finance AI at Terac. Project Director, CMU Product Management Academy. Running <a href="https://www.oryn-shop.com/" target="_blank" rel="noopener">Oryn</a></dd></div>
+      <div><dt class="label">Looking for</dt><dd>Product management internships, Summer 2027</dd></div>
+      <div><dt class="label">Tools</dt><dd>Figma, Python, R, Anthropic API, Notion</dd></div>
+    </dl>
+  </section>
+
+  <nav class="index" id="work" aria-label="Selected work">
+    <a href="#genai"><span class="mono">01</span><span class="t">How students trust ChatGPT</span><span class="kk">User research · 12 think-alouds</span></a>
+    <a href="#perflection"><span class="mono">02</span><span class="t">SneakySwing for Perflection AI</span><span class="kk">Customer discovery · 11 interviews</span></a>
+    <a href="#guild"><span class="mono">03</span><span class="t">Guild: the ROI report request</span><span class="kk">PM take-home · discovery plan</span></a>
+    <a href="#watch"><span class="mono">04</span><span class="t">Typing on a one-inch screen</span><span class="kk">Prototype · try it below</span></a>
+    <a href="#oryn"><span class="mono">05</span><span class="t">Oryn, a brand I launched</span><span class="kk">0 → 1 · live store</span></a>
+    <a href="#fiturnly"><span class="mono">06</span><span class="t">Fiturnly fit intelligence</span><span class="kk">PRD · ProdHacks 2026</span></a>
+    <a href="#mentorship"><span class="mono">07</span><span class="t">LinkedIn Mentorship Hub</span><span class="kk">Product strategy · roadmap</span></a>
+    <a href="#ixd"><span class="mono">08</span><span class="t">Chefstack and StudyConnect</span><span class="kk">Interaction design · Figma</span></a>
+    <a href="#sidecar"><span class="mono">09</span><span class="t">Sidecar catering</span><span class="kk">Service design · blueprint</span></a>
+  </nav>
+
+  <!-- 01 -->
+  <article class="case" id="genai">
+    <aside class="rail">
+      <span class="num">01 / User research</span>
+      <dl>
+        <div><dt>Role</dt><dd>User researcher, team of 6</dd></div>
+        <div><dt>When</dt><dd>Fall 2026, User-Centered Research &amp; Evaluation</dd></div>
+        <div><dt>Methods</dt><dd>Background research, survey analysis, heuristic evaluation, moderated think-aloud tests, abstraction laddering</dd></div>
+        <div><dt>Participants</dt><dd>College students and young professionals, 18–24</dd></div>
+      </dl>
+    </aside>
+    <div class="body">
+      <h2>How students trust ChatGPT, and where that trust breaks</h2>
+      <p class="sum">Students use ChatGPT to summarize readings and check facts. We wanted to know whether they notice when it gets something wrong. Mostly, they don't.</p>
+      <div class="readout">
+        <div><b>0 / 12</b><span>noticed the key causes the summary left out</span></div>
+        <div><b>4 / 12</b><span>opened the source article to check</span></div>
+        <div><b>33%</b><span>found the built-in regenerate control</span></div>
+        <div><b>9 / 12</b><span>rated the summary task easy</span></div>
+      </div>
+      <div class="two">
+        <div>
+          <h3>What I did</h3>
+          <ul>
+            <li>Ran a heuristic evaluation of ChatGPT against Nielsen's heuristics. I flagged icon-only controls and an unlabeled "Medium" effort setting.</li>
+            <li>Helped design and moderate 12 think-aloud sessions covering three tasks: summarize an article, resolve conflicting numbers, recover from a bad answer.</li>
+            <li>Synthesized the sessions with affinity clustering and rated each theme by frequency, impact and persistence.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>What we found</h3>
+          <ul>
+            <li><mark>Long, well-formatted summaries hide omissions.</mark> Readers skim the bold text and trust the structure.</li>
+            <li>ChatGPT sometimes accepted a wrong correction. Two participants accepted the wrong number along with it.</li>
+            <li>Recovery controls are hard to find, so most people retyped their prompt instead.</li>
+          </ul>
+        </div>
+      </div>
+      <p class="hmw"><span class="label">Problem statement we landed on</span>How might we help students notice when ChatGPT leaves out key information or changes a correct answer, without making it slower to use?</p>
+      <p>The tension that shaped it: 9 of 12 valued how fast the tool felt, so a fix that adds friction would get ignored. Our proposed direction is a lightweight "What might be missing?" check that sits next to the answer.</p>
+    </div>
+  </article>
+
+  <!-- 02 -->
+  <article class="case" id="perflection">
+    <aside class="rail">
+      <span class="num">02 / Customer discovery</span>
+      <dl>
+        <div><dt>Client</dt><dd>Perflection AI, a Pittsburgh startup, via CMU Product Management Academy</dd></div>
+        <div><dt>Role</dt><dd>Team lead (team of 5). As Project Director, I also ran the 5-team cohort</dd></div>
+        <div><dt>When</dt><dd>Mar – Apr 2026</dd></div>
+        <div><dt>Methods</dt><dd>The Mom Test interviews, on-course testing, hypothesis tracking, redesign</dd></div>
+      </dl>
+    </aside>
+    <div class="body">
+      <h2>SneakySwing: the retention hypothesis we went in with was wrong</h2>
+      <p class="sum">SneakySwing is an AI golf coach. You film your swing on your phone, and computer vision plus an LLM tell you what to fix. It had a live MVP and real users, but product decisions were running on assumptions.</p>
+      <div class="readout">
+        <div><b>11</b><span>interviews over 5 weeks</span></div>
+        <div><b>7</b><span>on-course sessions at Bob O'Connor Golf Course</span></div>
+        <div><b>3</b><span>hypotheses tested: usability, trust, retention</span></div>
+        <div><b>6</b><span>recommendations delivered to the founders</span></div>
+      </div>
+      <div class="tbl"><table>
+        <thead><tr><th>Area</th><th>What we assumed</th><th>Result</th><th>What users said</th></tr></thead>
+        <tbody>
+          <tr><td>Usability</td><td>Users can navigate the app without major difficulty</td><td><span class="chip">Partly confirmed</span></td><td>"The interface is easy to navigate." But also: "I have been golfing for four years, and even I'm unsure what some of these things mean."</td></tr>
+          <tr><td>Trust</td><td>Strong golfers will trust AI feedback less</td><td><span class="chip p0">Confirmed</span></td><td>"It's training on someone else's swing. Someone taller is going to have a steeper swing. Will it know that?"</td></tr>
+          <tr><td>Retention</td><td>Mid-to-advanced golfers will stay because the app gives them an extra edge</td><td><span class="chip p0">Disproven</span></td><td>"Once you reach a certain point in golf, you are aware what parts of your swing need fixing. You can essentially coach yourself."</td></tr>
+        </tbody>
+      </table></div>
+      <div class="two">
+        <div>
+          <h3>What we learned</h3>
+          <ul>
+            <li>The clean UI wasn't the problem. Playful, informal feedback language was, even for experienced players.</li>
+            <li>Every interviewee raised ball flight on their own. The app analyzes the swing, not where the ball goes.</li>
+            <li>Willingness to pay among mid-to-advanced golfers was zero. They already had coaches, or didn't value the feedback at their level. <mark>The better bet is beginners, where fast feedback matters most.</mark></li>
+          </ul>
+        </div>
+        <div>
+          <h3>What we recommended</h3>
+          <ol style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px">
+            <li>Fix video capture. On the course, the app cut recordings off before the swing ended.</li>
+            <li>Save every analyzed swing to the journal automatically.</li>
+            <li>Draw skeleton overlays and club path on the video instead of describing them in text.</li>
+            <li>Separate measured data from AI interpretation, so users know how much weight to give each.</li>
+            <li>Let users tag shot outcomes, and say plainly that ball tracking isn't there yet.</li>
+            <li>Calibrate for height, experience and swing style at onboarding.</li>
+          </ol>
+        </div>
+      </div>
+      <div>
+        <h3>The redesign</h3>
+        <p style="margin-bottom:16px">We turned each recommendation into a screen so the founders could react to something concrete.</p>
+        <div class="strip" role="list">
+          <figure role="listitem"><img src="img/ss-analysis.jpg" alt="Analysis screen with a skeleton and club path overlay, measured data marked high trust and AI interpretation marked medium trust" loading="lazy"><figcaption>Analysis. Overlays on the video, with measured data shown apart from AI interpretation.</figcaption></figure>
+          <figure role="listitem"><img src="img/ss-outcome.jpg" alt="Shot outcome tagging screen with straight, slice, hook, fat, thin and not sure options" loading="lazy"><figcaption>Shot outcome. One tap connects ball flight to the swing analysis.</figcaption></figure>
+          <figure role="listitem"><img src="img/ss-journal.jpg" alt="Journal screen listing saved swings with tags and a slice-tendency progress chart" loading="lazy"><figcaption>Journal. Every analyzed swing saves itself, with progress over time.</figcaption></figure>
+          <figure role="listitem"><img src="img/ss-coach.jpg" alt="Coach mode with drawing tools, an override AI feedback field and a voice note option" loading="lazy"><figcaption>Coach mode. Coaches annotate the video and can override the AI.</figcaption></figure>
+          <figure role="listitem"><img src="img/ss-calibration.jpg" alt="Onboarding calibration asking for level, height and swing style" loading="lazy"><figcaption>Calibration. Level, height and swing style, so no swing is judged against one textbook standard.</figcaption></figure>
+        </div>
+      </div>
+      <p class="hint">Sample caveat we flagged: most interviewees were tech-comfortable students, and we couldn't track anyone past their first session.</p>
+    </div>
+  </article>
+
+  <!-- 03 -->
+  <article class="case" id="guild">
+    <aside class="rail">
+      <span class="num">03 / Discovery plan</span>
+      <dl>
+        <div><dt>Context</dt><dd>Guild PM internship take-home, presented in a project review with two Guild PMs</dd></div>
+        <div><dt>When</dt><dd>May 2026</dd></div>
+        <div><dt>Prompt</dt><dd>A bank partner wants an ROI report on its education benefit. How would you run the 45-minute discovery call?</dd></div>
+      </dl>
+    </aside>
+    <div class="body">
+      <h2>An ROI request is a decision in disguise</h2>
+      <p class="sum">"ROI" without a decision behind it is just a number looking for a meaning. A bank could mean branch turnover, getting tellers into licensed roles, promotion rates, or the workforce story it tells its board. So I planned the call around finding the decision first.</p>
+      <p class="hmw"><span class="label">Goal for the 45 minutes</span>Walk away with 1–3 talent decisions this report should inform. For each one: the evidence that would move it, who has to believe it, and what would make them distrust it.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Bucket</th><th>A question I'd ask</th><th>Why it earns the time</th></tr></thead>
+        <tbody>
+          <tr><td>Goals</td><td>"What are the 1–2 talent priorities your head of HR is on the hook for in 2026?"</td><td>Ties ROI to goals they're already measured on</td></tr>
+          <tr><td>ROI today</td><td>"If you put one number in a board deck about this benefit, what would it be?"</td><td>Shows what shape the answer needs to take</td></tr>
+          <tr><td>Stakeholders</td><td>"Who else has to believe this report, and what will they object to?"</td><td>Champions get the meeting; skeptics decide the renewal</td></tr>
+          <tr><td>Data</td><td>"Have you tried to measure this yourselves? Where did it break?"</td><td>Shows where we add value instead of rebuilding what they have</td></tr>
+          <tr><td>Definition of good</td><td>"If we deliver exactly this, what do you do differently in the next 90 days?"</td><td>If they can't answer, the report is decoration</td></tr>
+        </tbody>
+      </table></div>
+      <div class="two">
+        <div><h3>What I planned beyond the call</h3><p>Talk to the account team and data engineers before promising anything. Compare how other bank partners measure ROI, and hear from employees who use the benefit. Then put two deliberately different prototypes in front of the partner, one built for Finance and one for HR, and see which they react to.</p></div>
+        <div><h3>How I used AI</h3><p>I had Claude gather what's public about Guild's products and partners, then role-play a skeptical bank HR partner. Any question I couldn't defend in one line got cut. Deciding which questions deserved the 45 minutes was my call.</p></div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 04 -->
+  <article class="case" id="watch">
+    <aside class="rail">
+      <span class="num">04 / Interaction design</span>
+      <dl>
+        <div><dt>Role</dt><dd>Interaction designer and researcher</dd></div>
+        <div><dt>Constraint</dt><dd>All input inside a 1 × 1 inch square</dd></div>
+        <div><dt>Methods</dt><dd>3 build-test-refine rounds, 6 moderated sessions</dd></div>
+        <div><dt>Built with</dt><dd>Processing (Java), n-gram word frequencies</dd></div>
+      </dl>
+    </aside>
+    <div class="body">
+      <h2>Typing on a one-inch screen</h2>
+      <p class="sum">The challenge: let someone type full sentences on a smartwatch-sized square, quickly and without errors. Below is the final design, rebuilt so you can try it. Tap keys or the blue suggestion bar.</p>
+
+      <div class="lab">
+        <div class="watch" aria-label="Smartwatch keyboard prototype">
+          <div class="screen" id="screen">
+            <div class="disp" id="disp"><span id="dispText">|</span></div>
+            <button class="sugg" id="sugg" type="button">Suggest: —</button>
+            <div class="rows" id="rows"></div>
+            <div class="preview" id="preview" hidden></div>
+          </div>
+        </div>
+        <div class="trial">
+          <span class="label">Type this phrase</span>
+          <div class="target" id="target"></div>
+          <div class="typed" id="typed" aria-live="polite"></div>
+          <div class="stats">
+            <div><span class="label">WPM</span><b id="wpm">—</b></div>
+            <div><span class="label">Errors</span><b id="err">—</b></div>
+            <div><span class="label">Phrases</span><b id="done">0</b></div>
+          </div>
+          <div class="btns">
+            <button class="btn" id="next" type="button">Submit phrase</button>
+            <button class="btn ghost" id="skip" type="button">New phrase</button>
+          </div>
+          <p class="hint">The timer starts on your first tap. WPM counts five characters as a word, the same way the class bakeoff scored it.</p>
+        </div>
+      </div>
+
+      <div class="two">
+        <div>
+          <h3>What changed between rounds</h3>
+          <ul>
+            <li><b>Round 1:</b> a mini QWERTY keyboard with a spelling-correction bar and an enlarged preview of the key under your finger.</li>
+            <li><b>Round 2:</b> a navy theme with color-coded keys (red ⌫, blue space bar). The suggestion bar now shows your typed prefix next to the completion.</li>
+            <li><b>Round 3:</b> users kept mis-hitting delete and space, so I rebuilt those targets. I also cut the OK button: it added a tap and caught nothing. And I replaced spelling correction with word-frequency autocomplete.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Results</h3>
+          <div class="tbl"><table>
+            <thead><tr><th>Round</th><th>User 1</th><th>User 2</th><th>Errors</th></tr></thead>
+            <tbody>
+              <tr><td>1. First prototype</td><td class="n">10.4 WPM</td><td class="n">11.2 WPM</td><td class="n">0 / 0</td></tr>
+              <tr><td>2. Refinement</td><td class="n">8.7 WPM</td><td class="n">10.0 WPM</td><td class="n">0 / 1</td></tr>
+              <tr><td>3. Final</td><td class="n">8.5 WPM</td><td class="n">10.6 WPM</td><td class="n">0 / 0</td></tr>
+            </tbody>
+          </table></div>
+          <p class="hint" style="margin-top:10px">Speed held steady while the uncorrected errors went back to zero. The lesson for me: a cleaner UI on its own didn't make people type faster.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+ 
+  <!-- 05 -->
+  <article class="case" id="oryn">
+    <aside class="rail">
+      <span class="num">05 / Zero to one</span>
+      <dl>
+        <div><dt>Role</dt><dd>Founder. Research, product, store, pricing and ads</dd></div>
+        <div><dt>When</dt><dd>Oct 2026 – now</dd></div>
+        <div><dt>Stack</dt><dd>Shopify (custom theme on Dawn), Kaching bundles and subscriptions, Meta ads</dd></div>
+        <div><dt>Live</dt><dd><a href="https://www.oryn-shop.com/" target="_blank" rel="noopener">oryn-shop.com</a></dd></div>
+      </dl>
+    </aside>
+    <div class="body">
+      <h2>Oryn: launching my own iron supplement brand</h2>
+      <p class="sum">Oryn sells one product: a gentle iron supplement for women who are tired in a way sleep doesn't fix. I started with what thousands of these women already say online, and built the product, offer and store around it.</p>
+      <div class="readout">
+        <div><b>~3,600</b><span>real customer voices read before building anything</span></div>
+        <div><b>6</b><span>sources: Reddit, YouTube, TikTok, Amazon reviews, competitor reviews and ads</span></div>
+        <div><b>1</b><span>product, live and taking orders</span></div>
+      </div>
+      <div class="two">
+        <div>
+          <h3>What the research found</h3>
+          <p>Before building, I read 404 Reddit threads, 1,776 YouTube comments, 763 TikTok comments and about 150 critical Amazon reviews, then synthesized them into one customer profile. I noted each source's bias next to its findings.</p>
+          <ul style="margin-top:12px">
+            <li><b>Her real competitor is quitting.</b> Drugstore iron upsets her stomach, so she stops. "Take iron for a week, feel awful, quit. Repeat every 6 months."</li>
+            <li><b>She blames herself.</b> About 60 comments said some version of "I told myself I was lazy." Most had never heard the word <i>ferritin</i>.</li>
+            <li><b>She no longer trusts the word "gentle".</b> Too many products promised it and still hurt.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>How it shaped the product</h3>
+          <ul>
+            <li><mark>Built for staying on it, not just absorption.</mark> I chose iron bisglycinate with vitamin C, a once-a-day tablet, because the job is getting her to month three.</li>
+            <li><b>Wrote in her words, not lab terms.</b> The store opens with "Feel like yourself again" instead of ferritin numbers. The copy rules ban promising specific lab results or implying she has a condition.</li>
+            <li><b>Priced for the habit.</b> Iron takes months to work, so the offer is quantity bundles, 2-, 6- and 12-month plans, and a 90-day guarantee.</li>
+            <li><b>Cut scope instead of slipping.</b> The first version paired iron with beef liver. When no supplier could make both, I relaunched as Oryn Gentle Iron rather than wait.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 06 -->
+  <article class="case" id="fiturnly">
+    <aside class="rail">
+      <span class="num">06 / Product spec</span>
+      <dl>
+        <div><dt>Context</dt><dd>ProdHacks 2026, team project</dd></div>
+        <div><dt>Deliverable</dt><dd>Product requirements document and pitch</dd></div>
+        <div><dt>Platform</dt><dd>ThredUP, then mid-sized DTC apparel brands</dd></div>
+      </dl>
+    </aside>
+    <div class="body">
+      <h2>Fiturnly: cutting returns at the size chart</h2>
+      <p class="sum">Over half of apparel returns come down to size and fit. On a resale site it's worse, because every item is a single piece that may have been washed, shrunk, or altered.</p>
+      <div class="readout">
+        <div><b>$890B</b><span>yearly cost of U.S. retail returns</span></div>
+        <div><b>20–30%</b><span>typical clothing return rate</span></div>
+        <div><b>2–5%</b><span>our target reduction in fit-related returns</span></div>
+      </div>
+      <div>
+        <h3>What we specified</h3>
+        <p>Existing tools like True Fit and 3DLOOK recommend a size, but they don't learn from what shoppers send back. Fiturnly closes that loop without asking anyone to scan their body.</p>
+      </div>
+      <div class="tbl"><table>
+        <thead><tr><th>Feature</th><th>Priority</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td>Fit Confidence Score</td><td><span class="chip p0">P0</span></td><td>High, medium or low badge on each listing, based on the shopper's keep and return history</td></tr>
+          <tr><td>Silent Fit History</td><td><span class="chip p0">P0</span></td><td>Builds a fit profile from kept and returned items, with no extra steps for the shopper</td></tr>
+          <tr><td>Return Friction Nudge</td><td><span class="chip p0">P0</span></td><td>Offers a same-style swap in the right size at return time. One tap to dismiss</td></tr>
+          <tr><td>Brand Sizing Reliability</td><td><span class="chip">P1</span></td><td>Scores how consistently a brand runs true to size</td></tr>
+          <tr><td>Inbound Fit Risk Signal</td><td><span class="chip">P1</span></td><td>Flags high-risk items before listing, for measurements or final sale</td></tr>
+        </tbody>
+      </table></div>
+      <p class="hint">Personas: Maya, 27, a thrifter who shops 2–4 times a month, and the ThredUP operations team, which sees 25–40% returns in some categories.</p>
+    </div>
+  </article>
+
+  <!-- 07 -->
+  <article class="case" id="mentorship">
+    <aside class="rail">
+      <span class="num">07 / Product strategy</span>
+      <dl>
+        <div><dt>Context</dt><dd>CMU Product Management Academy</dd></div>
+        <div><dt>Role</dt><dd>Defined MVP requirements, roadmap and success metrics</dd></div>
+        <div><dt>Methods</dt><dd>Personas, user research, risk mapping, metric design</dd></div>
+      </dl>
+    </aside>
+    <div class="body">
+      <h2>LinkedIn Mentorship Hub</h2>
+      <p class="sum">Students without family or alumni connections struggle to find mentors who recently walked their path. We designed a Gen Z companion app to LinkedIn that matches them with those mentors.</p>
+      <div class="readout">
+        <div><b>80M+</b><span>Gen Z university students, the market it opens</span></div>
+        <div><b>5,000</b><span>active mentor-mentee matches, MVP goal</span></div>
+        <div><b>60%</b><span>repeat engagement, expansion goal</span></div>
+      </div>
+      <div class="two">
+        <div>
+          <h3>North star metric</h3>
+          <p>Mentorship engagement rate: verified, recurring interactions (two or more sessions or active message threads) within 30 days. A signup alone doesn't count, because we wanted a metric that only moves when mentoring actually happens.</p>
+        </div>
+        <div>
+          <h3>The biggest risk</h3>
+          <p>Mentees will outnumber mentors. To get more mentors, we planned certified mentor badges, visibility boosts in feed and search, and mentoring achievements that show on the main LinkedIn profile.</p>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 08 -->
+  <article class="case" id="ixd">
+    <aside class="rail">
+      <span class="num">08 / Visual &amp; interaction design</span>
+      <dl>
+        <div><dt>Role</dt><dd>Solo designer</dd></div>
+        <div><dt>When</dt><dd>Fall 2026, Interaction Design Fundamentals</dd></div>
+        <div><dt>Process</dt><dd>Concept map, low-fi wireframes, high-fi mockups, written rationale</dd></div>
+        <div><dt>Tool</dt><dd>Figma</dd></div>
+      </dl>
+    </aside>
+    <div class="body">
+      <h2>Chefstack and StudyConnect</h2>
+      <p class="sum">Two products I took from sketch to high-fidelity mockup: a recipe app for phones and a web app for finding campus study groups. For each one I wrote out the reasoning behind every layout choice.</p>
+      <div class="shots">
+        <figure><img src="img/chefstack-lofi.jpg" alt="Chefstack low-fidelity wireframe on a 3-column grid" loading="lazy"><figcaption>Chefstack wireframe. 3 columns, 20 px margins, 16 px gutters.</figcaption></figure>
+        <figure><img src="img/chefstack-final.jpg" alt="Chefstack final home screen with featured recipes, meal categories and filters" loading="lazy"><figcaption>Final. The featured image is about 4× the area of its neighbors, so the eye lands there first.</figcaption></figure>
+        <figure><img src="img/studyconnect-final.jpg" alt="StudyConnect home page listing popular study groups and the student's active groups" loading="lazy"><figcaption>StudyConnect. Study groups take 8 of 12 columns because they are the main content. Red only marks actions and alerts.</figcaption></figure>
+      </div>
+      <div class="two">
+        <div><h3>A detail I'm proud of</h3><p>Chefstack's recipe cards have no boxes. The title sits 6 px under its photo and 16 px from the next card. That 2.5× spacing ratio is enough for each card to read as one unit.</p></div>
+        <div><h3>A navigation choice</h3><p>In StudyConnect, each group's recent activity lives under that group instead of in a separate feed. Students see what changed where they already look, and the red dot marks unread messages without extra text.</p></div>
+      </div>
+    </div>
+  </article>
+
+  <!-- 09 -->
+  <article class="case" id="sidecar">
+    <aside class="rail">
+      <span class="num">09 / Service design</span>
+      <dl>
+        <div><dt>Client</dt><dd>Sidecar, a local Pittsburgh food business</dd></div>
+        <div><dt>Deliverable</dt><dd>Strategy presentation: research, blueprint, user flow, metrics, tradeoffs</dd></div>
+      </dl>
+    </aside>
+    <div class="body">
+      <h2>Sidecar: catering for student clubs</h2>
+      <p class="sum">Sidecar wanted more community reach. We compared three growth options and picked catering, because student clubs order once a week or more, more often than any other customer group.</p>
+      <figure><img src="img/sidecar-blueprint.jpg" alt="Service blueprint covering awareness, discovery, ordering, fulfillment and follow-up for student organization catering" loading="lazy"><figcaption>The service blueprint. Clubs didn't know Sidecar caters, couldn't find a menu or prices, and had no intake form. Nothing on Sidecar's side tracked repeat orders.</figcaption></figure>
+      <div class="two">
+        <div><h3>Recommendation</h3><p>Partner with student organizations through pilot events, and market catering on Instagram. Small website changes help too: larger packages, serving-size info, and a mail merge to reach hundreds of Pittsburgh clubs with personalized messages.</p></div>
+        <div><h3>How we'd measure it</h3><p>Catering orders per week, revenue, average order size, repeat customers and on-time delivery. Post-order questions on quality and reorder intent would feed back into the packages.</p></div>
+      </div>
+    </div>
+  </article>
+
+  <section class="xp" id="experience">
+    <h2>Experience</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>When</th><th>Where</th><th>What I did</th></tr></thead>
+      <tbody>
+        <tr><td class="n">Oct 2026 – now</td><td><b>Oryn</b><br>Founder</td><td>Launched a DTC iron supplement brand, from customer research to a live Shopify store with bundles and subscriptions.</td></tr>
+        <tr><td class="n">Sep 2026 – now</td><td><b>Terac</b><br>Product, Finance AI</td><td>Evaluate AI-generated investment banking and private equity deliverables against analyst-level standards, and annotate failures to produce preference data for model training.</td></tr>
+        <tr><td class="n">Sep 2025 – now</td><td><b>CMU Business Technology Group</b><br>Project Director, Product Management Academy</td><td>Run an 18-person product cohort. Rebuilt the curriculum around data-driven product strategy, which raised member NPS.</td></tr>
+        <tr><td class="n">Feb – May 2026</td><td><b>Perflection AI</b><br>Product Strategy Consultant</td><td>Led the SneakySwing discovery sprint above: 11 interviews, a disproved retention hypothesis, and six recommendations for the founders.</td></tr>
+        <tr><td class="n">Apr – Aug 2025</td><td><b>AfterQuery (YC W25)</b><br>Product &amp; Finance Analyst</td><td>Defined requirements and success metrics for AI data products with engineering, improving training efficiency by 20%. Built dashboards that leadership used to set priorities.</td></tr>
+        <tr><td class="n">Jun – Aug 2024</td><td><b>AugCap LLC</b><br>Investment &amp; Product Strategy Analyst</td><td>Market and competitor analysis for early-stage companies in 5+ sectors. Built DCF, LBO and APV models that tied financial limits back to roadmap decisions.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="more">
+    <h2>Smaller pieces</h2>
+    <div class="tbl"><table>
+      <thead><tr><th>Project</th><th>Type</th><th>Gist</th></tr></thead>
+      <tbody>
+        <tr><td>Everyday interaction design analysis</td><td>IxD critique</td><td>Feedback, feedforward and affordances in the Magic Keyboard, iPhone and MacBook trackpad. Example: one side button that locks the phone, opens Apple Pay or starts Siri, with nothing on it to say which.</td></tr>
+        <tr><td>Bias in image search</td><td>Survey analysis</td><td>65% of respondents rated race-related results harmful, compared with 32% for sexual orientation. The gap shows that visible diversity can hide who is missing.</td></tr>
+        <tr><td>Online to IRL</td><td>Survey research, n = 30</td><td>60% of participants reported higher trust after meeting in person, and none reported a weaker connection.</td></tr>
+        <tr><td>Okepas tariff shock</td><td>Operations case</td><td>Proposed keeping base-shoe production in China and moving customization closer to customers, after 145% tariffs.</td></tr>
+        <tr><td>Nike 10-year DCF</td><td>Valuation</td><td>Estimated $49.09 per share against a $56.08 market price, using an 8.3% WACC. Recommendation: hold or sell.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <footer id="contact">
+    <div>
+      <h2>Let's talk about product.</h2>
+      <div class="copy"><code id="email">isamarin@andrew.cmu.edu</code><button class="btn ghost" id="copyBtn" type="button">Copy email</button></div>
+    </div>
+    <div class="mono" style="display:flex;flex-direction:column;gap:6px">
+      <a href="https://www.linkedin.com/in/iliasamarin" target="_blank" rel="noopener">linkedin.com/in/iliasamarin</a>
+      <span>Pittsburgh, PA</span>
+    </div>
+  </footer>
+</div>
+
+<script>
+const DATA = {"w": ["the", "of", "and", "to", "a", "in", "for", "is", "on", "that", "by", "this", "with", "i", "you", "it", "not", "or", "be", "are", "from", "at", "as", "your", "all", "have", "new", "more", "an", "was", "we", "will", "home", "can", "us", "about", "if", "page", "my", "has", "search", "free", "but", "our", "one", "other", "do", "no", "information", "time", "they", "site", "he", "up", "may", "what", "which", "their", "news", "out", "use", "any", "there", "see", "only", "so", "his", "when", "contact", "here", "business", "who", "web", "also", "now", "help", "get", "pm", "view", "online", "first", "am", "been", "would", "how", "were", "me", "services", "some", "these", "click", "its", "like", "service", "than", "find", "price", "date", "back", "top", "people", "had", "list", "name", "just", "over", "state", "year", "day", "into", "email", "two", "health", "world", "re", "next", "used", "go", "work", "last", "most", "products", "music", "buy", "data", "make", "them", "should", "product", "system", "post", "her", "city", "add", "policy", "number", "such", "please", "available", "copyright", "support", "message", "after", "best", "software", "then", "jan", "good", "video", "well", "where", "info", "rights", "public", "books", "high", "school", "through", "each", "links", "she", "review", "years", "order", "very", "privacy", "book", "items", "company", "read", "group", "sex", "need", "many", "user", "said", "de", "does", "set", "under", "general", "research", "university", "january", "mail", "full", "map", "reviews", "program", "life", "know", "games", "way", "days", "management", "part", "could", "great", "united", "hotel", "real", "item", "international", "center", "ebay", "must", "store", "travel", "comments", "made", "development", "report", "off", "member", "details", "line", "terms", "before", "hotels", "did", "send", "right", "type", "because", "local", "those", "using", "results", "office", "education", "national", "car", "design", "take", "posted", "internet", "address", "community", "within", "states", "area", "want", "phone", "dvd", "shipping", "reserved", "subject", "between", "forum", "family", "long", "based", "code", "show", "even", "black", "check", "special", "prices", "website", "index", "being", "women", "much", "sign", "file", "link", "open", "today", "technology", "south", "case", "project", "same", "pages", "uk", "version", "section", "own", "found", "sports", "house", "related", "security", "both", "county", "american", "photo", "game", "members", "power", "while", "care", "network", "down", "computer", "systems", "three", "total", "place", "end", "following", "download", "him", "without", "per", "access", "think", "north", "resources", "current", "posts", "big", "media", "law", "control", "water", "history", "pictures", "size", "art", "personal", "since", "including", "guide", "shop", "directory", "board", "location", "change", "white", "text", "small", "rating", "rate", "government", "children", "during", "usa", "return", "students", "shopping", "account", "times", "sites", "level", "digital", "profile", "previous", "form", "events", "love", "old", "john", "main", "call", "hours", "image", "department", "title", "description", "non", "insurance", "another", "why", "shall", "property", "class", "cd", "still", "money", "quality", "every", "listing", "content", "country", "private", "little", "visit", "save", "tools", "low", "reply", "customer", "december", "compare", "movies", "include", "college", "value", "article", "york", "man", "card", "jobs", "provide", "food", "source", "author", "different", "press", "learn", "sale", "around", "print", "course", "job", "canada", "process", "teen", "room", "stock", "training", "too", "credit", "point", "join", "science", "men", "categories", "advanced", "west", "sales", "look", "english", "left", "team", "estate", "box", "conditions", "select", "windows", "photos", "gay", "thread", "week", "category", "note", "live", "large", "gallery", "table", "register", "however", "june", "october", "november", "market", "library", "really", "action", "start", "series", "model", "features", "air", "industry", "plan", "human", "provided", "tv", "yes", "required", "second", "hot", "accessories", "cost", "movie", "forums", "march", "la", "september", "better", "say", "questions", "july", "yahoo", "going", "medical", "test", "friend", "come", "dec", "server", "pc", "study", "application", "cart", "staff", "articles", "san", "feedback", "again", "play", "looking", "issues", "april", "never", "users", "complete", "street", "topic", "comment", "financial", "things", "working", "against", "standard", "tax", "person", "below", "mobile", "less", "got", "blog", "party", "payment", "equipment", "login", "student", "let", "programs", "offers", "legal", "above", "recent", "park", "stores", "side", "act", "problem", "red", "give", "memory", "performance", "social", "august", "quote", "language", "story", "sell", "options", "experience", "rates", "create", "key", "body", "young", "america", "important", "field", "few", "east", "paper", "single", "ii", "age", "activities", "club", "example", "girls", "additional", "password", "latest", "something", "road", "gift", "question", "changes", "night", "ca", "hard", "texas", "oct", "pay", "four", "poker", "status", "browse", "issue", "range", "building", "seller", "court", "february", "always", "result", "audio", "light", "write", "war", "nov", "offer", "blue", "groups", "al", "easy", "given", "files", "event", "release", "analysis", "request", "fax", "china", "making", "picture", "needs", "possible", "might", "professional", "yet", "month", "major", "star", "areas", "future", "space", "committee", "hand", "sun", "cards", "problems", "london", "washington", "meeting", "rss", "become", "interest", "id", "child", "keep", "enter", "california", "porn", "share", "similar", "garden", "schools", "million", "added", "reference", "companies", "listed", "baby", "learning", "energy", "run", "delivery", "net", "popular", "term", "film", "stories", "put", "computers", "journal", "reports", "co", "try", "welcome", "central", "images", "president", "notice", "god", "original", "head", "radio", "until", "cell", "color", "self", "council", "away", "includes", "track", "australia", "discussion", "archive", "once", "others", "entertainment", "agreement", "format", "least", "society", "months", "log", "safety", "friends", "sure", "faq", "trade", "edition", "cars", "messages", "marketing", "tell", "further", "updated", "association", "able", "having", "provides", "david", "fun", "already", "green", "studies", "close", "common", "drive", "specific", "several", "gold", "feb", "living", "sep", "collection", "called", "short", "arts", "lot", "ask", "display", "limited", "powered", "solutions", "means", "director", "daily", "beach", "past", "natural", "whether", "due", "et", "electronics", "five", "upon", "period", "planning", "database", "says", "official", "weather", "mar", "land", "average", "done", "technical", "window", "france", "pro", "region", "island", "record", "direct", "microsoft", "conference", "environment", "records", "st", "district", "calendar", "costs", "style", "url", "front", "statement", "update", "parts", "aug", "ever", "downloads", "early", "miles", "sound", "resource", "present", "applications", "either", "ago", "document", "word", "works", "material", "bill", "apr", "written", "talk", "federal", "hosting", "rules", "final", "adult", "tickets", "thing", "centre", "requirements", "via", "cheap", "nude", "kids", "finance", "true", "minutes", "else", "mark", "third", "rock", "gifts", "europe", "reading", "topics", "bad", "individual", "tips", "plus", "auto", "cover", "usually", "edit", "together", "videos", "percent", "fast", "function", "fact", "unit", "getting", "global", "tech", "meet", "far", "economic", "en", "player", "projects", "lyrics", "often", "subscribe", "submit", "germany", "amount", "watch", "included", "feel", "though", "bank", "risk", "thanks", "everything", "deals", "various", "words", "linux", "jul", "production", "commercial", "james", "weight", "town", "heart", "advertising", "received", "choose", "treatment", "newsletter", "archives", "points", "knowledge", "magazine", "error", "camera", "jun", "girl", "currently", "construction", "toys", "registered", "clear", "golf", "receive", "domain", "methods", "chapter", "makes", "protection", "policies", "loan", "wide", "beauty", "manager", "india", "position", "taken", "sort", "listings", "models", "michael", "known", "half", "cases", "step", "engineering", "florida", "simple", "quick", "none", "wireless", "license", "paul", "friday", "lake", "whole", "annual", "published", "later", "basic", "sony", "shows", "corporate", "google", "church", "method", "purchase", "customers", "active", "response", "practice", "hardware", "figure", "materials", "fire", "holiday", "chat", "enough", "designed", "along", "among", "death", "writing", "speed", "html", "countries", "loss", "face", "brand", "discount", "higher", "effects", "created", "remember", "standards", "oil", "bit", "yellow", "political", "increase", "advertise", "kingdom", "base", "near", "environmental", "thought", "stuff", "french", "storage", "oh", "japan", "doing", "loans", "shoes", "entry", "stay", "nature", "orders", "availability", "africa", "summary", "turn", "mean", "growth", "notes", "agency", "king", "monday", "european", "activity", "copy", "although", "drug", "pics", "western", "income", "force", "cash", "employment", "overall", "bay", "river", "commission", "ad", "package", "contents", "seen", "players", "engine", "port", "album", "regional", "stop", "supplies", "started", "administration", "bar", "institute", "views", "plans", "double", "dog", "build", "screen", "exchange", "types", "soon", "sponsored", "lines", "electronic", "continue", "across", "benefits", "needed", "season", "apply", "someone", "held", "ny", "anything", "printer", "condition", "effective", "believe", "organization", "effect", "asked", "eur", "mind", "sunday", "selection", "casino", "pdf", "lost", "tour", "menu", "volume", "cross", "anyone", "mortgage", "hope", "silver", "corporation", "wish", "inside", "solution", "mature", "role", "rather", "weeks", "addition", "came", "supply", "nothing", "certain", "usr", "executive", "running", "lower", "necessary", "union", "jewelry", "according", "dc", "clothing", "mon", "com", "particular", "fine", "names", "robert", "homepage", "hour", "gas", "skills", "six", "bush", "islands", "advice", "career", "military", "rental", "decision", "leave", "british", "teens", "pre", "huge", "sat", "woman", "facilities", "zip", "bid", "kind", "sellers", "middle", "move", "cable", "opportunities", "taking", "values", "division", "coming", "tuesday", "object", "lesbian", "appropriate", "machine", "logo", "length", "actually", "nice", "score", "statistics", "client", "ok", "returns", "capital", "follow", "sample", "investment", "sent", "shown", "saturday", "christmas", "england", "culture", "band", "flash", "ms", "lead", "george", "choice", "went", "starting", "registration", "fri", "thursday", "courses", "consumer", "hi", "airport", "foreign", "artist", "outside", "furniture", "levels", "channel", "letter", "mode", "phones", "ideas", "wednesday", "structure", "fund", "summer", "allow", "degree", "contract", "button", "releases", "wed", "homes", "super", "male", "matter", "custom", "virginia", "almost", "took", "located", "multiple", "asian", "distribution", "editor", "inn", "industrial", "cause", "potential", "song", "cnet", "ltd", "los", "hp", "focus", "late", "fall", "featured", "idea", "rooms", "female", "responsible", "inc", "communications", "win", "associated", "thomas", "primary", "cancer", "numbers", "reason", "tool", "browser", "spring", "foundation", "answer", "voice", "eg", "friendly", "schedule", "documents", "communication", "purpose", "feature", "bed", "comes", "police", "everyone", "independent", "ip", "approach", "cameras", "brown", "physical", "operating", "hill", "maps", "medicine", "deal", "hold", "ratings", "chicago", "forms", "glass", "happy", "tue", "smith", "wanted", "developed", "thank", "safe", "unique", "survey", "prior", "telephone", "sport", "ready", "feed", "animal", "sources", "mexico", "population", "pa", "regular", "secure", "navigation", "operations", "therefore", "ass", "simply", "evidence", "station", "christian", "round", "paypal", "favorite", "understand", "option", "master", "valley", "recently", "probably", "thu", "rentals", "sea", "built", "publications", "blood", "cut", "worldwide", "improve", "connection", "publisher", "hall", "larger", "anti", "networks", "earth", "parents", "nokia", "impact", "transfer", "introduction", "kitchen", "strong", "tel", "carolina", "wedding", "properties", "hospital", "ground", "overview", "ship", "accommodation", "owners", "disease", "tx", "excellent", "paid", "italy", "perfect", "hair", "opportunity", "kit", "classic", "basis", "command", "cities", "william", "express", "anal", "award", "distance", "tree", "peter", "assessment", "ensure", "thus", "wall", "ie", "involved", "el", "extra", "especially", "interface", "pussy", "partners", "budget", "rated", "guides", "success", "maximum", "ma", "operation", "existing", "quite", "selected", "boy", "amazon", "patients", "restaurants", "beautiful", "warning", "wine", "locations", "horse", "vote", "forward", "flowers", "stars", "significant", "lists", "technologies", "owner", "retail", "animals", "useful", "directly", "manufacturer", "ways", "est", "son", "providing", "rule", "mac", "housing", "takes", "iii", "gmt", "bring", "catalog", "searches", "max", "trying", "mother", "authority", "considered", "told", "xml", "traffic", "programme", "joined", "input", "strategy", "feet", "agent", "valid", "bin", "modern", "senior", "ireland", "sexy", "teaching", "door", "grand", "testing", "trial", "charge", "units", "instead", "canadian", "cool", "normal", "wrote", "enterprise", "ships", "entire", "educational", "md", "leading", "metal", "positive", "fl", "fitness", "chinese", "opinion", "mb", "asia", "football", "abstract", "uses", "output", "funds", "mr", "greater", "likely", "develop", "employees", "artists", "alternative", "processing", "responsibility", "resolution", "java", "guest", "seems", "publication", "pass", "relations", "trust", "van", "contains", "session", "multi", "photography", "republic", "fees", "components", "vacation", "century", "academic", "assistance", "completed", "skin", "graphics", "indian", "prev", "ads", "mary", "il", "expected", "ring", "grade", "dating", "pacific", "mountain", "organizations", "pop", "filter", "mailing", "vehicle", "longer", "consider", "int", "northern", "behind", "panel", "floor", "german", "buying", "match", "proposed", "default", "require", "iraq", "boys", "outdoor", "deep", "morning", "otherwise", "allows", "rest", "protein", "plant", "reported", "hit", "transportation", "mm", "pool", "mini", "politics", "partner", "disclaimer", "authors", "boards", "faculty", "parties", "fish", "membership", "mission", "eye", "string", "sense", "modified", "pack", "released", "stage", "internal", "goods", "recommended", "born", "unless", "richard", "detailed", "japanese", "race", "approved", "background", "target", "except", "character", "usb", "maintenance", "ability", "maybe", "functions", "ed", "moving", "brands", "places", "php", "pretty", "trademarks", "phentermine", "spain", "southern", "yourself", "etc", "winter", "rape", "battery", "youth", "pressure", "submitted", "boston", "incest", "debt", "keywords", "medium", "television", "interested", "core", "break", "purposes", "throughout", "sets", "dance", "wood", "msn", "itself", "defined", "papers", "playing", "awards", "fee", "studio", "reader", "virtual", "device", "established", "answers", "rent", "las", "remote", "dark", "programming", "external", "apple", "le", "regarding", "instructions", "min", "offered", "theory", "enjoy", "remove", "aid", "surface", "minimum", "visual", "host", "variety", "teachers", "isbn", "martin", "manual", "block", "subjects", "agents", "increased", "repair", "fair", "civil", "steel", "understanding", "songs", "fixed", "wrong", "beginning", "hands", "associates", "finally", "az", "updates", "desktop", "classes", "paris", "ohio", "gets", "sector", "capacity", "requires", "jersey", "un", "fat", "fully", "father", "electric", "saw", "instruments", "quotes", "officer", "driver", "businesses", "dead", "respect", "unknown", "specified", "restaurant", "mike", "trip", "pst", "worth", "mi", "procedures", "poor", "teacher", "xxx", "eyes", "relationship", "workers", "farm", "fucking", "georgia", "peace", "traditional", "campus", "tom", "showing", "creative", "coast", "benefit", "progress", "funding", "devices", "lord", "grant", "sub", "agree", "fiction", "hear", "sometimes", "watches", "careers", "beyond", "goes", "families", "led", "museum", "themselves", "fan", "transport", "interesting", "blogs", "wife", "evaluation", "accepted", "former", "implementation", "ten", "hits", "zone", "complex", "th", "cat", "galleries", "references", "die", "presented", "jack", "flat", "flow", "agencies", "literature", "respective", "parent", "spanish", "michigan", "columbia", "setting", "dr", "scale", "stand", "economy", "highest", "helpful", "monthly", "critical", "frame", "musical", "definition", "secretary", "angeles", "networking", "path", "australian", "employee", "chief", "gives", "kb", "bottom", "magazines", "packages", "detail", "francisco", "laws", "changed", "pet", "heard", "begin", "individuals", "colorado", "royal", "clean", "switch", "russian", "largest", "african", "guy", "titles", "relevant", "guidelines", "justice", "connect", "bible", "dev", "cup", "basket", "applied", "weekly", "vol", "installation", "described", "demand", "pp", "suite", "vegas", "na", "square", "chris", "attention", "advance", "skip", "diet", "army", "auction", "gear", "lee", "os", "difference", "allowed", "correct", "charles", "nation", "selling", "lots", "piece", "sheet", "firm", "seven", "older", "illinois", "regulations", "elements", "species", "jump", "cells", "module", "resort", "facility", "random", "pricing", "dvds", "certificate", "minister", "motion", "looks", "fashion", "directions", "visitors", "documentation", "monitor", "trading", "forest", "calls", "whose", "coverage", "couple", "giving", "chance", "vision", "ball", "ending", "clients", "actions", "listen", "discuss", "accept", "automotive", "naked", "goal", "successful", "sold", "wind", "communities", "clinical", "situation", "sciences", "markets", "lowest", "highly", "publishing", "appear", "emergency", "developing", "lives", "currency", "leather", "determine", "milf", "temperature", "palm", "announcements", "patient", "actual", "historical", "stone", "bob", "commerce", "ringtones", "perhaps", "persons", "difficult", "scientific", "satellite", "fit", "tests", "village", "accounts", "amateur", "ex", "met", "pain", "xbox", "particularly", "factors", "coffee", "www", "settings", "cum", "buyer", "cultural", "steve", "easily", "oral", "ford", "poster", "edge", "functional", "root", "au", "fi", "closed", "holidays", "ice", "pink", "zealand", "balance", "monitoring", "graduate", "replies", "shot", "nc", "architecture", "initial", "label", "thinking", "scott", "llc", "sec", "recommend", "canon", "hardcore", "league", "waste", "minute", "bus", "provider", "optional", "dictionary", "cold", "accounting", "manufacturing", "sections", "chair", "fishing", "effort", "phase", "fields", "bag", "fantasy", "po", "letters", "motor", "va", "professor", "context", "install", "shirt", "apparel", "generally", "continued", "foot", "mass", "crime", "count", "breast", "techniques", "ibm", "rd", "johnson", "sc", "quickly", "dollars", "websites", "religion", "claim", "driving", "permission", "surgery", "patch", "heat", "wild", "measures", "generation", "kansas", "miss", "chemical", "doctor", "task", "reduce", "brought", "himself", "nor", "component", "enable", "exercise", "bug", "santa", "mid", "guarantee", "leader", "diamond", "israel", "se", "processes", "soft", "servers", "alone", "meetings", "seconds", "jones", "arizona", "keyword", "interests", "flight", "congress", "fuel", "username", "walk", "fuck", "produced", "italian", "paperback", "classifieds", "wait", "supported", "pocket", "saint", "rose", "freedom", "argument", "competition", "creating", "jim", "drugs", "joint", "premium", "providers", "fresh", "characters", "attorney", "upgrade", "di", "factor", "growing", "thousands", "km", "stream", "apartments", "pick", "hearing", "eastern", "auctions", "therapy", "entries", "dates", "generated", "signed", "upper", "administrative", "serious", "prime", "samsung", "limit", "began", "louis", "steps", "errors", "shops", "bondage", "del", "efforts", "informed", "ga", "ac", "thoughts", "creek", "ft", "worked", "quantity", "urban", "practices", "sorted", "reporting", "essential", "myself", "tours", "platform", "load", "affiliate", "labor", "immediately", "admin", "nursing", "defense", "machines", "designated", "tags", "heavy", "covered", "recovery", "joe", "guys", "integrated", "configuration", "cock", "merchant", "comprehensive", "expert", "universal", "protect", "drop", "solid", "cds", "presentation", "languages", "became", "orange", "compliance", "vehicles", "prevent", "theme", "rich", "im", "campaign", "marine", "improvement", "vs", "guitar", "finding", "pennsylvania", "examples", "ipod", "saying", "spirit", "ar", "claims", "porno", "challenge", "motorola", "acceptance", "strategies", "mo", "seem", "affairs", "touch", "intended", "towards", "sa", "goals", "hire", "election", "suggest", "branch", "charges", "serve", "affiliates", "reasons", "magic", "mount", "smart", "talking", "gave", "ones", "latin", "multimedia", "xp", "tits", "avoid", "certified", "manage", "corner", "rank", "computing", "oregon", "element", "birth", "virus", "abuse", "interactive", "requests", "separate", "quarter", "procedure", "leadership", "tables", "define", "racing", "religious", "facts", "breakfast", "kong", "column", "plants", "faith", "chain", "developer", "identify", "avenue", "missing", "died", "approximately", "domestic", "sitemap", "recommendations", "moved", "houston", "reach", "comparison", "mental", "viewed", "moment", "extended", "sequence", "inch", "attack", "sorry", "centers", "opening", "damage", "lab", "reserve", "recipes", "cvs", "gamma", "plastic", "produce", "snow", "placed", "truth", "counter", "failure", "follows", "eu", "weekend", "dollar", "camp", "ontario", "automatically", "des", "minnesota", "films", "bridge", "native", "fill", "williams", "movement", "printing", "baseball", "owned", "approval", "draft", "chart", "played", "contacts", "cc", "jesus", "readers", "clubs", "lcd", "wa", "jackson", "equal", "adventure", "matching", "offering", "shirts", "profit", "leaders", "posters", "institutions", "assistant", "variable", "ave", "dj", "advertisement", "expect", "parking", "headlines", "yesterday", "compared", "determined", "wholesale", "workshop", "russia", "gone", "codes", "kinds", "extension", "seattle", "statements", "golden", "completely", "teams", "fort", "cm", "wi", "lighting", "senate", "forces", "funny", "brother", "gene", "turned", "portable", "tried", "electrical", "applicable", "disc", "returned", "pattern", "ct", "hentai", "boat", "named", "theatre", "laser", "earlier", "manufacturers", "sponsor", "classical", "icon", "warranty", "dedicated", "indiana", "direction", "harry", "basketball", "objects", "ends", "delete", "evening", "assembly", "nuclear", "taxes", "mouse", "signal", "criminal", "issued", "brain", "sexual", "wisconsin", "powerful", "dream", "obtained", "false", "da", "cast", "flower", "felt", "personnel", "passed", "supplied", "identified", "falls", "pic", "soul", "aids", "opinions", "promote", "stated", "stats", "hawaii", "professionals", "appears", "carry", "flag", "decided", "nj", "covers", "hr", "em", "advantage", "hello", "designs", "maintain", "tourism", "priority", "newsletters", "adults", "clips", "savings", "iv", "graphic", "atom", "payments", "rw", "estimated", "binding", "brief", "ended", "winning", "eight", "anonymous", "iron", "straight", "script", "served", "wants", "miscellaneous", "prepared", "void", "dining", "alert", "integration", "atlanta", "dakota", "tag", "interview", "mix", "framework", "disk", "installed", "queen", "vhs", "credits", "clearly", "fix", "handle", "sweet", "desk", "criteria", "pubmed", "dave", "massachusetts", "diego", "hong", "vice", "associate", "ne", "truck", "behavior", "enlarge", "ray", "frequently", "revenue", "measure", "changing", "votes", "du", "duty", "looked", "discussions", "bear", "gain", "festival", "laboratory", "ocean", "flights", "experts", "signs", "lack", "depth", "iowa", "whatever", "logged", "laptop", "vintage", "train", "exactly", "dry", "explore", "maryland", "spa", "concept", "nearly", "eligible", "checkout", "reality", "forgot", "handling", "origin", "knew", "gaming", "feeds", "billion", "destination", "scotland", "faster", "intelligence", "dallas", "bought", "con", "ups", "nations", "route", "followed", "specifications", "broken", "tripadvisor", "frank", "alaska", "zoom", "blow", "battle", "residential", "anime", "speak", "decisions", "industries", "protocol", "query", "clip", "partnership", "editorial", "nt", "expression", "es", "equity", "provisions", "speech", "wire", "principles", "suggestions", "rural", "shared", "sounds", "replacement", "tape", "strategic", "judge", "spam", "economics", "acid", "bytes", "cent", "forced", "compatible", "fight", "apartment", "height", "null", "zero", "speaker", "filed", "gb", "netherlands", "obtain", "bc", "consulting", "recreation", "offices", "designer", "remain", "managed", "pr", "failed", "marriage", "roll", "korea", "banks", "fr", "participants", "secret", "bath", "aa", "kelly", "leads", "negative", "austin", "favorites", "toronto", "theater", "springs", "missouri", "andrew", "var", "perform", "healthy", "translation", "estimates", "font", "assets", "injury", "mt", "joseph", "ministry", "drivers", "lawyer", "figures", "married", "protected", "proposal", "sharing", "philadelphia", "portal", "waiting", "birthday", "beta", "fail", "gratis", "banking", "officials", "brian", "toward", "won", "slightly", "assist", "conduct", "contained", "lingerie", "shemale", "legislation", "calling", "parameters", "jazz", "serving", "bags", "profiles", "miami", "comics", "matters", "houses", "doc", "postal", "relationships", "tennessee", "wear", "controls", "breaking", "combined", "ultimate", "wales", "representative", "frequency", "introduced", "minor", "finish", "departments", "residents", "noted", "displayed", "mom", "reduced", "physics", "rare", "spent", "performed", "extreme", "samples", "davis", "daniel", "bars", "reviewed", "row", "oz", "forecast", "removed", "helps", "singles", "administrator", "cycle", "amounts", "contain", "accuracy", "dual", "rise", "usd", "sleep", "mg", "bird", "pharmacy", "brazil", "creation", "static", "scene", "hunter", "addresses", "lady", "crystal", "famous", "writer", "chairman", "violence", "fans", "oklahoma", "speakers", "drink", "academy", "dynamic", "gender", "eat", "permanent", "agriculture", "dell", "cleaning", "constitutes", "portfolio", "practical", "delivered", "collectibles", "infrastructure", "exclusive", "seat", "concerns", "colour", "vendor", "originally", "intel", "utilities", "philosophy", "regulation", "officers", "reduction", "aim", "bids", "referred", "supports", "nutrition", "recording", "regions", "junior", "toll", "les", "cape", "ann", "rings", "meaning", "tip", "secondary", "wonderful", "mine", "ladies", "henry", "ticket", "announced", "guess", "agreed", "prevention", "whom", "ski", "soccer", "math", "import", "posting", "presence", "instant", "mentioned", "automatic", "healthcare", "viewing", "maintained", "ch", "increasing", "majority", "connected", "christ", "dan", "dogs", "sd", "directors", "aspects", "austria", "ahead", "moon", "participation", "scheme", "utility", "preview", "fly", "manner", "matrix", "containing", "combination", "devel", "amendment", "despite", "strength", "guaranteed", "turkey", "libraries", "proper", "distributed", "degrees", "singapore", "enterprises", "delta", "fear", "seeking", "inches", "phoenix", "rs", "convention", "shares", "principal", "daughter", "standing", "voyeur", "comfort", "colors", "wars", "cisco", "ordering", "kept", "alpha", "appeal", "cruise", "bonus", "certification", "previously", "hey", "bookmark", "buildings", "specials", "beat", "disney", "household", "batteries", "adobe", "smoking", "bbc", "becomes", "drives", "arms", "alabama", "tea", "improved", "trees", "avg", "achieve", "positions", "dress", "subscription", "dealer", "contemporary", "sky", "utah", "nearby", "rom", "carried", "happen", "exposure", "panasonic", "hide", "permalink", "signature", "gambling", "refer", "miller", "provision", "outdoors", "clothes", "caused", "luxury", "babes", "frames", "viagra", "certainly", "indeed", "newspaper", "toy", "circuit", "layer", "printed", "slow", "removal", "easier", "src", "liability", "trademark", "hip", "printers", "faqs", "nine", "adding", "kentucky", "mostly", "eric", "spot", "taylor", "trackback", "prints", "spend", "factory", "interior", "revised", "grow", "americans", "optical", "promotion", "relative", "amazing", "clock", "dot", "hiv", "identity", "suites", "conversion", "feeling", "hidden", "reasonable", "victoria", "serial", "relief", "revision", "broadband", "influence", "ratio", "pda", "importance", "rain", "onto", "dsl", "planet", "webmaster", "copies", "recipe", "zum", "permit", "seeing", "proof", "dna", "diff", "tennis", "bass", "prescription", "bedroom", "empty", "instance", "hole", "pets", "ride", "licensed", "orlando", "specifically", "tim", "bureau", "maine", "sql", "represent", "conservation", "pair", "ideal", "specs", "recorded", "don", "pieces", "finished", "parks", "dinner", "lawyers", "sydney", "stress", "cream", "ss", "runs", "trends", "yeah", "discover", "sexo", "ap", "patterns", "boxes", "louisiana", "hills", "javascript", "fourth", "nm", "advisor", "mn", "marketplace", "nd", "evil", "aware", "wilson", "shape", "evolution", "irish", "certificates", "objectives", "stations", "suggested", "gps", "op", "remains", "acc", "greatest", "firms", "concerned", "euro", "operator", "structures", "generic", "encyclopedia", "usage", "cap", "ink", "charts", "continuing", "mixed", "census", "interracial", "peak", "tn", "competitive", "exist", "wheel", "transit", "dick", "suppliers", "salt", "compact", "poetry", "lights", "tracking", "angel", "bell", "keeping", "preparation", "attempt", "receiving", "matches", "accordance", "width", "noise", "engines", "forget", "array", "discussed", "accurate", "stephen", "elizabeth", "climate", "reservations", "pin", "playstation", "alcohol", "greek", "instruction", "managing", "annotation", "sister", "raw", "differences", "walking", "explain", "smaller", "newest", "establish", "gnu", "happened", "expressed", "jeff", "extent", "sharp", "lesbians", "ben", "lane", "paragraph", "kill", "mathematics", "aol", "compensation", "ce", "export", "managers", "aircraft", "modules", "sweden", "conflict", "conducted", "versions", "employer", "occur", "percentage", "knows", "mississippi", "describe", "concern", "backup", "requested", "citizens", "connecticut", "heritage", "personals", "immediate", "holding", "trouble", "spread", "coach", "kevin", "agricultural", "expand", "supporting", "audience", "assigned", "jordan", "collections", "ages", "participate", "plug", "specialist", "cook", "affect", "virgin", "experienced", "investigation", "raised", "hat", "institution", "directed", "dealers", "searching", "sporting", "helping", "perl", "affected", "lib", "bike", "totally", "plate", "expenses", "indicate", "blonde", "ab", "proceedings", "favourite", "transmission", "anderson", "utc", "characteristics", "der", "lose", "organic", "seek", "experiences", "albums", "cheats", "extremely", "verzeichnis", "contracts", "guests", "hosted", "diseases", "concerning", "developers", "equivalent", "chemistry", "tony", "neighborhood", "nevada", "kits", "thailand", "variables", "agenda", "anyway", "continues", "tracks", "advisory", "cam", "curriculum", "logic", "template", "prince", "circle", "soil", "grants", "anywhere", "psychology", "responses", "atlantic", "wet", "circumstances", "edward", "investor", "identification", "ram", "leaving", "wildlife", "appliances", "matt", "elementary", "cooking", "speaking", "sponsors", "fox", "unlimited", "respond", "sizes", "plain", "exit", "entered", "iran", "arm", "keys", "launch", "wave", "checking", "costa", "belgium", "printable", "holy", "acts", "guidance", "mesh", "trail", "enforcement", "symbol", "crafts", "highway", "buddy", "hardcover", "observed", "dean", "setup", "poll", "booking", "glossary", "fiscal", "celebrity", "styles", "denver", "unix", "filled", "bond", "channels", "ericsson", "appendix", "notify", "blues", "chocolate", "pub", "portion", "scope", "hampshire", "supplier", "cables", "cotton", "bluetooth", "controlled", "requirement", "authorities", "biology", "dental", "killed", "border", "ancient", "debate", "representatives", "starts", "pregnancy", "causes", "arkansas", "biography", "leisure", "attractions", "learned", "transactions", "notebook", "explorer", "historic", "attached", "opened", "tm", "husband", "disabled", "authorized", "crazy", "upcoming", "britain", "concert", "retirement", "scores", "financing", "efficiency", "sp", "comedy", "adopted", "efficient", "weblog", "linear", "commitment", "specialty", "bears", "jean", "hop", "carrier", "edited", "constant", "visa", "mouth", "jewish", "meter", "linked", "portland", "interviews", "concepts", "nh", "gun", "reflect", "pure", "deliver", "wonder", "hell", "lessons", "fruit", "begins", "qualified", "reform", "lens", "alerts", "treated", "discovery", "draw", "mysql", "classified", "relating", "assume", "confidence", "alliance", "fm", "confirm", "warm", "neither", "lewis", "howard", "offline", "leaves", "engineer", "lifestyle", "consistent", "replace", "clearance", "connections", "inventory", "converter", "suck", "organisation", "babe", "checks", "reached", "becoming", "blowjob", "safari", "objective", "indicated", "sugar", "crew", "legs", "sam", "stick", "securities", "allen", "pdt", "relation", "enabled", "genre", "slide", "montana", "volunteer", "tested", "rear", "democratic", "enhance", "switzerland", "exact", "bound", "parameter", "adapter", "processor", "node", "formal", "dimensions", "contribute", "lock", "hockey", "storm", "micro", "colleges", "laptops", "mile", "showed", "challenges", "editors", "mens", "threads", "bowl", "supreme", "brothers", "recognition", "presents", "ref", "tank", "submission", "dolls", "estimate", "encourage", "navy", "kid", "regulatory", "inspection", "consumers", "cancel", "limits", "territory", "transaction", "manchester", "weapons", "paint", "delay", "pilot", "outlet", "contributions", "continuous", "db", "czech", "resulting", "cambridge", "initiative", "novel", "pan", "execution", "disability", "increases", "ultra", "winner", "idaho", "contractor", "ph", "episode", "examination", "potter", "dish", "plays", "bulletin", "ia", "pt", "indicates", "modify", "oxford", "adam", "truly", "epinions", "painting", "committed", "extensive", "affordable", "universe", "candidate", "databases", "patent", "slot", "psp", "outstanding", "ha", "eating", "perspective", "planned", "watching", "lodge", "messenger", "mirror", "tournament", "consideration", "ds", "discounts", "sterling", "sessions", "kernel", "boobs", "stocks", "buyers", "journals", "gray", "catalogue", "ea", "jennifer", "antonio", "charged", "broad", "taiwan", "und", "chosen", "demo", "greece", "lg", "swiss", "sarah", "fell", "prevailing", "thin", "breathing", "saturn", "overdrawn", "elections", "spaghetti", "elephants", "afraid", "mice", "blast", "unacceptable", "flying", "succeed", "prayer", "offends", "disturbance", "skate", "borrower", "lender", "heck", "answered", "beware", "ides", "toil", "denial", "jedi", "cannot", "refuse", "gel", "greasy", "valium", "dreamers", "dreams", "squander", "popularity", "desired", "starlight", "dewdrop", "jumping", "drove", "chevy", "levee", "rover", "nutty", "killer", "bites", "lesson", "opposing", "wearing", "tie", "jacket", "jumped", "pile", "crown", "jewels", "fog", "tonight", "allergic", "bees", "peanuts", "dow", "risen", "preferred", "treat", "sends", "tower", "obey", "turtleneck", "goldilocks", "grocery", "assignment", "shoulders", "knees", "toes", "vanilla", "flavored", "robin", "scheduling", "jammed", "deserve", "fudge", "monkey", "sees", "unfortunate", "yard", "worm", "buckle", "lamb", "expensive", "communicate", "bills", "quakes", "predictable", "recycling", "depot", "excited", "trucks", "tire", "duck", "quacks", "seasons", "rises", "windy", "worry", "dashing", "lunch", "strangers", "accompanied", "alligator", "sucker", "bare", "batman", "wears", "hate", "baking", "pies", "lydia", "prize", "contest", "freud", "ego", "bases", "nobody", "cares", "anymore", "rid", "watched", "blazing", "saddles", "sum", "yap", "peek", "midnight", "pimp", "skimmed", "sweatshirt", "bloodshed", "toss", "noon", "superman", "wore", "mask", "everyday", "shouting", "loudly", "diction", "seasoned", "golfers", "cooled", "sheds", "patio", "cookies", "bite", "ridiculous", "lovely", "spilled", "carpet", "oceans", "olympic", "athletes", "deed", "knocking", "flashing", "sprawling", "subdivisions", "glasses", "cottage", "chlorine", "breaks", "claus", "stuck", "phrases", "fingers", "universities", "parkways", "driveways", "pizza", "beer", "stupid", "camping", "disaster", "imagination", "universally", "understood", "opera", "occasional", "taste", "victims", "redress", "protesters", "blocked", "boring", "summit", "encouragement", "stiff", "penalty", "staying", "pen", "mightier", "sword", "exceed", "contrast", "consequences", "baloney", "loose", "taxation", "paintings", "missed", "coalition", "governments", "destruction", "acutely", "cake", "machinery", "complicated", "glance", "busy", "mystery", "lagoon", "indication", "chamber", "phenomenon", "obligations", "complaints", "photographs", "shack", "buried", "bone", "daring", "equation", "touchdown", "treasury", "broke", "bathroom", "gap", "wider", "spill", "forever", "prepare", "exam", "observation", "etiquette", "investigate", "stability", "anniversary", "presidential", "punishment", "cheese", "keeps", "sympathy", "reluctant", "subtraction", "daughters", "sons", "thoroughly", "disgusting", "withdrawal", "slip", "strained", "aspirations", "medieval", "thousand", "winners", "losers", "voters", "turfed", "collapse", "roman", "empire", "spectacular", "explosion", "receipts", "assault", "priorities", "traveling", "joke", "deserves", "laugh", "strike", "interactions", "silly", "sunny", "tomorrow", "psychiatrist", "appointment", "odd", "exasperation", "redouble", "kissing", "rife", "conscience", "sad", "discharged", "accident", "poorest", "algorithm", "inspiring", "burglars", "blazed", "diplomacy", "confidential", "rationale", "pleasant", "temperament", "housekeeper", "thorough", "majesty", "visited", "handicapped", "barracks", "fold", "peeps", "sing", "gospel", "underwent", "triple", "bypass", "ropes", "peering", "rapidly", "concentrate", "spoonful", "cups", "announce", "merger", "socket", "avoided", "sunset", "dine", "weekends", "aboard", "monitored", "astonishment", "scratch", "tabletop", "salesmen", "quota", "saving", "heroic", "granite", "hardest", "rocks", "offenders", "folds", "laundry", "careless", "microscopes", "coupon", "moderation", "sticker", "validated", "raged", "precautions", "witnesses", "labour", "unions", "organize", "horn", "correction", "baroque", "proprietor", "unavailable", "discreet", "lavatory", "suburbs", "everywhere", "shivering", "dolphins", "leap", "maternity", "ventilation", "dinosaurs", "extinct", "inefficient", "crowded", "injustice", "coronation", "exciting", "syllabus", "rectangular", "sides", "insulation", "finer", "discovering", "treasure", "expectancy", "waves", "swamp", "treasurer", "chancellor", "shrine", "tumor", "benign", "murder", "prison", "sentence", "quit", "knee", "thigh", "streets", "luckily", "wallet", "allotted", "raise", "trains", "sit", "prefer", "provinces", "elevator", "raindrops", "falling", "speeding", "bullet", "wishful", "arguing", "boss", "futile", "persistent", "dhcs", "presidents", "dipped", "nasty", "conferences", "nervous", "pumping", "roads", "slippery", "challenged", "powder", "handled", "ordered", "harrison", "rattle", "snake", "poisonous", "weeping", "willows", "ate", "biggest", "hamburger", "gamblers", "eventually", "irregular", "verbs", "offensive", "lie", "nose", "enlarged", "suggests", "liar", "detector", "judges", "honest", "idiot", "doors", "locked", "dormitory", "motivational", "seminars", "sick", "bakeoffs", "questioning", "wisdom", "courts", "rejection", "discouraging", "swim", "referendum", "steep", "curve", "riding", "unicycle", "stimulus", "everybody", "looses", "custody", "battles", "garbage", "abandoned", "recruitment", "lottery", "picket", "chills"], "p": ["my watch fell in the water", "prevailing wind from the east", "never too rich and never too thin", "breathing is difficult", "i can see the rings on saturn", "physics and chemistry are hard", "my bank account is overdrawn", "elections bring out the best", "we are having spaghetti", "time to go shopping", "a problem with the engine", "elephants are afraid of mice", "my favorite place to visit", "three two one zero blast off", "my favorite subject is psychology", "circumstances are unacceptable", "watch out for low flying objects", "if at first you do not succeed", "please provide your date of birth", "we run the risk of failure", "prayer in schools offends some", "he is just like everyone else", "great disturbance in the force", "love means many things", "you must be getting old", "the world is a stage", "can i skate with sister today", "neither a borrower nor a lender be", "one heck of a question", "question that must be answered", "beware the ides of march", "double double toil and trouble", "the power of denial", "i agree with you", "do not say anything", "play it again sam", "the force is with you", "you are not a jedi yet", "an offer you cannot refuse", "are you talking to me", "yes you are very smart", "all work and no play", "hair gel is very greasy", "valium in the economy size", "the facts get in the way", "the dreamers of dreams", "did you have a good time", "space is a high priority", "you are a wonderful example", "do not squander your time", "do not drink too much", "take a coffee break", "popularity is desired by all", "the music is better than it sounds", "starlight and dewdrop", "the living is easy", "fish are jumping", "the cotton is high", "drove my chevy to the levee", "but the levee was dry", "i took the rover from the shop", "movie about a nutty professor", "come and see our new car", "coming up with killer sound bites", "i am going to a music lesson", "the opposing team is over there", "soon we will return from the city", "i am wearing a tie and a jacket", "the quick brown fox jumped", "all together in one big pile", "wear a crown with many jewels", "there will be some fog tonight", "i am allergic to bees and peanuts", "he is still on our team", "the dow jones index has risen", "my preferred treat is chocolate", "the king sends you to the tower", "we are subjects and must obey", "mom made her a turtleneck", "goldilocks and the three bears", "we went grocery shopping", "the assignment is due today", "what you see is what you get", "for your information only", "a quarter of a century", "the store will close at ten", "head shoulders knees and toes", "vanilla flavored ice cream", "frequently asked questions", "round robin scheduling", "information super highway", "my favorite web browser", "the laser printer is jammed", "all good boys deserve fudge", "the second largest country", "call for more details", "just in time for the party", "have a good weekend", "video camera with a zoom lens", "that is very unfortunate", "the back yard of our house", "this is a very good idea", "reading week is just about here", "our fax number has changed", "thank you for your help", "no exchange without a bill", "the early bird gets the worm", "buckle up for safety", "this is too much to handle", "protect your environment", "world population is growing", "the library is closed today", "mary had a little lamb", "teaching services will help", "we accept personal checks", "this is a non profit organization", "user friendly interface", "healthy food is good for you", "hands on experience with a job", "this watch is too expensive", "the postal service is very slow", "communicate through email", "the capital of our nation", "travel at the speed of light", "i do not fully agree with you", "gas bills are sent monthly", "earth quakes are predictable", "life is but a dream", "take it to the recycling depot", "sent this by registered mail", "fall is my favorite season", "a fox is a very smart animal", "the kids are very excited", "parking lot is full of trucks", "my bike has a flat tire", "do not walk too quickly", "a duck quacks to ask for food", "limited warranty of two years", "the four seasons will come", "the sun rises in the east", "it is very windy today", "do not worry about this", "dashing through the snow", "want to join us for lunch", "stay away from strangers", "accompanied by an adult", "see you later alligator", "i can play much better now", "my bare face in the wind", "batman wears a cape", "i hate baking pies", "lydia wants to go home", "win first prize in the contest", "freud wrote of the ego", "i do not care if you do that", "always cover all the bases", "nobody cares anymore", "can we play cards tonight", "get rid of that immediately", "i watched blazing saddles", "the sum of the parts", "they love to yap about nothing", "peek out the window", "be home before midnight", "i skimmed through your proposal", "he was wearing a sweatshirt", "toss the ball around", "i will meet you at noon", "i want to hold your hand", "the children are playing", "superman never wore a mask", "i listen to the tape everyday", "he is shouting loudly", "correct your diction immediately", "seasoned golfers love the game", "he cooled off after she left", "my dog sheds his hair", "join us on the patio", "these cookies are so amazing", "i can still feel your presence", "the dog will bite you", "a most ridiculous thing", "where did you get that tie", "what a lovely red jacket", "do you like to shop on sunday", "i spilled coffee on the carpet", "the largest of the five oceans", "shall we play a round of cards", "my mother makes good cookies", "do a good deed to someone", "quick there is someone knocking", "flashing red light means stop", "sprawling subdivisions are bad", "where did i leave my glasses", "on the way to the cottage", "a lot of chlorine in the water", "do not drink the water", "my car always breaks in the winter", "santa claus got stuck", "public transit is much faster", "zero in on the facts", "make up a few more phrases", "my fingers are very cold", "rain rain go away", "bad for the environment", "universities are too expensive", "the price of gas is high", "the winner of the race", "we drive on parkways", "we park in driveways", "go out for some pizza and beer", "effort is what it will take", "where can my little dog be", "not quite so smart as you think", "do you like to go camping", "this person is a disaster", "the imagination of the nation", "universally understood to be wrong", "listen to five hours of opera", "an occasional taste of chocolate", "victims deserve more redress", "the protesters blocked all traffic", "the acceptance speech was boring", "work hard to reach the summit", "a little encouragement is needed", "stiff penalty for staying out late", "the pen is mightier than the sword", "exceed the maximum speed limit", "in sharp contrast to your words", "this leather jacket is too warm", "consequences of a wrong turn", "this mission statement is baloney", "you will loose your voice", "every apple from every tree", "are you sure you want this", "the fourth edition was better", "this system of taxation", "beautiful paintings in the gallery", "a yard is almost as a meter", "we missed your birthday", "coalition governments never work", "destruction of the rain forest", "i like to play tennis", "acutely aware of her good looks", "you want to eat your cake", "machinery is too complicated", "a glance in the right direction", "i just cannot figure this out", "please follow the guidelines", "an airport is a very busy place", "mystery of the lost lagoon", "is there any indication of this", "this phenomenon will never occur", "obligations must be met first", "valid until the end of the year", "file all complaints in writing", "tickets are very expensive", "a picture is worth many words", "this camera takes nice photographs", "it looks like a shack", "the dog buried the bone", "the daring young man", "this equation is too complicated", "express delivery is very fast", "i will put on my glasses", "a touchdown in the last minute", "the treasury department is broke", "a good response to the question", "well connected with people", "the bathroom is good for reading", "the generation gap gets wider", "chemical spill took forever", "prepare for the exam in advance", "interesting observation was made", "your etiquette needs some work", "we better investigate this", "stability of the nation", "house with new electrical panel", "our silver anniversary is coming", "sharp cheese keeps the mind sharp", "the registration period is over", "you have my sympathy", "the objective of the exercise", "historic meeting without a result", "very reluctant to enter", "good at addition and subtraction", "six daughters and seven sons", "sign the withdrawal slip", "relations are very strained", "the minimum amount of time", "a very traditional way to dress", "the aspirations of a nation", "medieval times were very hard", "a security force of eight thousand", "there are winners and losers", "the voters turfed him out", "pay off a mortgage for a house", "the collapse of the roman empire", "get your priorities in order", "traveling requires a lot of fuel", "longer than a football field", "a good joke deserves a good laugh", "the union will go on strike", "interactions between men and women", "it should be sunny tomorrow", "you should visit a doctor", "you must make an appointment", "the fax machine is broken", "players must know all the rules", "a dog is the best friend of a man", "would you like to come to my house", "february has an extra day", "do not feel too bad about it", "this library has many books", "he called seven times", "that is a very odd question", "a feeling of complete exasperation", "we must redouble our efforts", "vote according to your conscience", "sad to hear that news", "one of the poorest nations", "the algorithm is too complicated", "your presentation was inspiring", "the fire blazed all weekend", "if diplomacy does not work", "please keep this confidential", "the rationale behind the decision", "the cat has a pleasant temperament", "her majesty visited our country", "these barracks are big enough", "keep it below the fold peeps", "sing the gospel and the blues", "he underwent triple bypass surgery", "the ropes of a new organization", "peering through a small hole", "rapidly running short on words", "it is difficult to concentrate", "give me one spoonful of coffee", "two or three cups of coffee", "just like it says on the can good", "companies announce a merger", "electric cars need big fuel cells", "the plug does not fit the socket", "the most beautiful sunset", "we dine out on the weekends", "get aboard the ship is leaving", "the water was monitored daily", "he watched in astonishment", "a big scratch on the tabletop", "bring the offenders to justice", "careless driving results in a fine", "a coupon for a free sample", "fine but only in moderation", "a subject one can really enjoy", "important for political parties", "that sticker needs to be validated", "the fire raged for an entire month", "we have enough witnesses", "labour unions know how to organize", "people blow their horn a lot", "a correction had to be published", "i like baroque and classical music", "the proprietor was unavailable", "be discreet about your meeting", "shivering is one way to keep warm", "try to enjoy your maternity leave", "the ventilation system is broken", "an inefficient way to heat a house", "the bus was very crowded", "the coronation was very exciting", "the insulation is not working", "our life expectancy has increased", "the cream rises to the top", "the high waves will swamp us", "completely sold out of that", "the location of the crime", "the chancellor was very boring", "please take a bath this month", "quit while you are ahead", "luckily my wallet was found", "one hour is allotted for questions", "so you think you deserve a raise", "they watched the entire movie", "good jobs for those with education", "jumping right out of the water", "the trains are always late", "sit at the front of the bus", "do you prefer a window seat", "the food at this restaurant", "canada has ten provinces", "raindrops keep falling on my head", "spill coffee on the carpet", "an excellent way to communicate", "with each step forward", "faster than a speeding bullet", "wishful thinking is fine", "nothing wrong with his style", "arguing with the boss is futile", "taking the train is usually faster", "what goes up must come down", "be persistent to win a strike", "dhcs is the best class ever", "presidents drive expensive cars", "the stock exchange dipped", "why do you ask silly questions", "that is a very nasty cut", "what to do when the oil runs dry", "learn to walk before you run", "traveling to conferences is fun", "do you get nervous when you speak", "parking tickets can be challenged", "apartments are too expensive", "find a nearby parking spot", "just what the doctor ordered", "a rattle snake is very poisonous", "exercise is good for the mind", "most judges are very honest", "staying up all night is a bad idea", "motivational seminars make me sick", "these bakeoffs are a lot of work", "rejection letters are discouraging", "the first time he tried to swim", "put garbage in an abandoned mine", "experience is hard to come by", "everyone wants to win the lottery"]};
+(function(){
+  const WORDS = DATA.w, PHRASES = DATA.p;
+  const rank = new Map(WORDS.map((w,i)=>[w,i]));
+  const $ = id => document.getElementById(id);
+  let typed = "", phrase = "", start = 0, done = 0, letters = 0, ms = 0, errs = 0, suggestion = "";
+
+  const rowsEl = $("rows");
+  ["qwertyuiop","asdfghjkl","zxcvbnm"].forEach(r=>{
+    const row = document.createElement("div"); row.className = "row";
+    for (const c of r){ const b = document.createElement("button"); b.type="button"; b.className="k"; b.textContent=c.toUpperCase(); b.dataset.k=c; row.appendChild(b); }
+    rowsEl.appendChild(row);
+  });
+  const bottom = document.createElement("div"); bottom.className = "bottom";
+  bottom.innerHTML = '<button type="button" class="k del" data-k="del" aria-label="Delete">⌫</button><button type="button" class="k sp" data-k=" " aria-label="Space"></button>';
+  rowsEl.appendChild(bottom);
+
+  function pick(){ let p; do { p = PHRASES[Math.floor(Math.random()*PHRASES.length)]; } while (p === phrase); phrase = p; typed = ""; start = 0; render(); }
+  function currentWord(){ const i = typed.lastIndexOf(" "); return typed.slice(i+1); }
+  function suggest(){
+    const w = currentWord(); suggestion = "";
+    if (w.length < 1) return;
+    for (const cand of WORDS){ if (cand.length > w.length && cand.startsWith(w)){ suggestion = cand; break; } }
+  }
+  function lev(a,b){ const d = Array.from({length:a.length+1},(_,i)=>[i]); for(let j=1;j<=b.length;j++) d[0][j]=j;
+    for(let i=1;i<=a.length;i++) for(let j=1;j<=b.length;j++) d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1)); return d[a.length][b.length]; }
+  function esc(s){ return s.replace(/[&<>]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c])); }
+  function render(){
+    suggest();
+    $("dispText").textContent = (typed.slice(-18) || "") + "|";
+    const s = $("sugg");
+    if (suggestion){ const w = currentWord(); s.classList.add("on"); s.innerHTML = '<span class="pre">'+esc(w)+'</span>'+esc(suggestion.slice(w.length)); s.setAttribute("aria-label","Accept suggestion "+suggestion); }
+    else { s.classList.remove("on"); s.textContent = "Suggest: —"; s.setAttribute("aria-label","No suggestion"); }
+    let html = "";
+    for (let i=0;i<phrase.length;i++){ const c = esc(phrase[i]===" " ? " " : phrase[i]); if (i < typed.length) html += typed[i]===phrase[i] ? '<span class="ok">'+c+'</span>' : '<span class="bad">'+c+'</span>'; else html += c; }
+    $("target").innerHTML = html;
+    $("typed").textContent = typed ? "You typed: " + typed : "Nothing typed yet";
+  }
+  function press(k){
+    if (!start) start = performance.now();
+    if (k === "del") typed = typed.slice(0,-1);
+    else if (k === " ") { if (!typed.endsWith(" ")) typed += " "; }
+    else typed += k;
+    render();
+  }
+  rowsEl.addEventListener("click", e=>{ const b = e.target.closest("[data-k]"); if (b) press(b.dataset.k); });
+  $("sugg").addEventListener("click", ()=>{ if (!suggestion) return; if (!start) start = performance.now(); const i = typed.lastIndexOf(" "); typed = typed.slice(0,i+1) + suggestion + " "; render(); });
+
+  const prev = $("preview"), screen = $("screen");
+  function showPrev(e){ const b = e.target.closest(".row [data-k]"); if (!b){ prev.hidden = true; return; }
+    const r = screen.getBoundingClientRect(), br = b.getBoundingClientRect();
+    prev.textContent = b.textContent; prev.style.left = (br.left - r.left + br.width/2) + "px"; prev.style.top = (br.top - r.top) + "px"; prev.hidden = false; }
+  rowsEl.addEventListener("pointermove", showPrev);
+  rowsEl.addEventListener("pointerdown", showPrev);
+  rowsEl.addEventListener("pointerleave", ()=> prev.hidden = true);
+  rowsEl.addEventListener("pointerup", e=>{ if (e.pointerType !== "mouse") setTimeout(()=>prev.hidden = true, 120); });
+
+  $("next").addEventListener("click", ()=>{
+    if (!start || !typed.trim()) return;
+    const t = typed.trim(); ms += performance.now() - start; letters += t.length; errs += lev(t, phrase); done++;
+    $("wpm").textContent = ((letters/5)/(ms/60000)).toFixed(1);
+    $("err").textContent = errs; $("done").textContent = done;
+    pick();
+  });
+  $("skip").addEventListener("click", pick);
+  pick();
+
+  $("copyBtn").addEventListener("click", ()=>{
+    const b = $("copyBtn"), txt = $("email").textContent;
+    const sel = ()=>{ const r = document.createRange(); r.selectNodeContents($("email")); const s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = "Selected, press ⌘C"; };
+    try { navigator.clipboard.writeText(txt).then(()=> b.textContent = "Copied", sel); } catch(e){ sel(); }
+  });
+})();
+</script>
+
+</body>
+</html>
