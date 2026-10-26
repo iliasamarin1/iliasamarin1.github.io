@@ -98,6 +98,9 @@ figure img{display:block;width:100%;height:auto;border:1px solid var(--rule);bac
 figcaption{font-size:13px;color:var(--ink-2);line-height:1.45}
 .strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px}
 .strip img{aspect-ratio:9/17;object-fit:cover;object-position:top;border-radius:10px}
+.duo{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:32px;align-items:center}
+.duo figure img{border:0;background:none}
+@media (max-width:560px){.duo{grid-template-columns:1fr}.duo figure{max-width:240px}}
 .shots{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1fr) minmax(0,1.5fr);gap:20px;align-items:start}
 
 table{border-collapse:collapse;width:100%;font-size:14px}
@@ -370,12 +373,17 @@ footer h2{font-size:clamp(28px,4vw,44px);font-weight:800}
     <div class="body">
       <h2>LinkedIn Mentorship Hub</h2>
       <p class="sum">A Gen Z companion app that matches students with mentors who recently walked their path.</p>
-      <div class="readout">
-        <div><b>80M+</b><span>Gen Z students reachable</span></div>
-        <div><b>5,000</b><span>matches, MVP goal</span></div>
-        <div><b>60%</b><span>repeat engagement goal</span></div>
+      <div class="duo">
+        <figure><img src="img/mentorship-hub.jpg" alt="Mentorship Hub mockup listing recent graduates and students with Message and Call buttons" loading="lazy"><figcaption>Mentors who were recently in your shoes, one tap to reach</figcaption></figure>
+        <div style="display:flex;flex-direction:column;gap:20px;min-width:0">
+          <div class="readout">
+            <div><b>80M+</b><span>Gen Z students reachable</span></div>
+            <div><b>5,000</b><span>matches, MVP goal</span></div>
+            <div><b>60%</b><span>repeat engagement goal</span></div>
+          </div>
+          <p><b>North star:</b> mentorships with two or more real interactions in 30 days, not signups. <b>Biggest risk:</b> too few mentors, so we planned badges and visibility boosts to attract them.</p>
+        </div>
       </div>
-      <p><b>North star:</b> mentorships with two or more real interactions in 30 days, not signups. <b>Biggest risk:</b> too few mentors, so we planned badges and visibility boosts to attract them.</p>
     </div>
   </article>
 
