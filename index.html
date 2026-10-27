@@ -95,12 +95,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 /* horizontal scroll gallery */
 .hs{position:relative}
 .hs .stick{position:sticky;top:48px;height:calc(100vh - 48px);display:flex;flex-direction:column;justify-content:center;overflow:hidden}
-.track{display:flex;gap:28px;will-change:transform;padding-inline:max(22px,calc((100vw - 1080px)/2))}
-.track figure{margin:0;flex:0 0 auto;width:clamp(200px,22vw,270px)}
-.track img{width:100%;aspect-ratio:9/18;object-fit:cover;object-position:top;border-radius:30px;box-shadow:0 0 0 1px rgba(255,255,255,.08),0 30px 60px -30px rgba(143,191,90,.35)}
-.track figcaption{margin-top:16px;font-size:15px;color:var(--on-dark-2);text-align:center}
+.track{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(12px,1.8vw,24px);padding-block:24px 8px}
+.track figure{margin:0;min-width:0}
+.track img{width:100%;aspect-ratio:9/18;object-fit:cover;object-position:top;border-radius:clamp(16px,2vw,28px);box-shadow:0 0 0 1px rgba(255,255,255,.08),0 30px 60px -30px rgba(143,191,90,.35)}
+.track figcaption{margin-top:14px;font-size:clamp(13px,1.2vw,15px);color:var(--on-dark-2);text-align:center}
 .track figcaption b{display:block;color:var(--on-dark);font-weight:600;margin-bottom:2px}
-@media (max-width:820px){.hs{height:auto!important}.hs .stick{position:static;height:auto;padding-block:8px 0}.track{overflow-x:auto;scroll-snap-type:x mandatory;transform:none!important;padding-bottom:14px}.track figure{scroll-snap-align:center}}
+@media (max-width:820px){.track{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:520px){.track{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 /* table-ish hypothesis rows */
 .rows3{margin-top:clamp(56px,7vw,88px);border-top:1px solid var(--line-dark)}
@@ -227,8 +228,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
     <p class="sub muted lead">An AI golf coach with a live MVP. I led a team of 5 through 11 interviews, 7 of them on the course, to test what the founders believed about their users.</p>
   </div>
 </section>
-<section class="hs dark" style="--accent:var(--golf)" data-hs>
-  <div class="stick">
+<section class="gal dark" style="--accent:var(--golf)">
+  <div class="in">
     <div class="track">
       <figure><img src="img/ss-analysis.jpg?v=3" alt="Analysis screen separating measured data from AI interpretation"><figcaption><b>Measured vs. AI guess</b>So users know what to trust</figcaption></figure>
       <figure><img src="img/ss-outcome.jpg?v=3" alt="Shot outcome tagging screen"><figcaption><b>Shot outcome</b>Tag where the ball went</figcaption></figure>
