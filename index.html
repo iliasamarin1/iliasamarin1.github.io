@@ -55,11 +55,11 @@ a:hover{text-decoration-color:var(--ink)}
 .proj h2{font-size:clamp(24px,2.8vw,30px);line-height:1.25;margin-top:28px}
 .proj .meta{margin-top:6px}
 .proj p{margin-top:16px}
-.plate{background:var(--plate);padding:clamp(20px,4vw,48px)}
+.plate{padding:0}
 figcaption{margin-top:10px}
 
 .shots{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(8px,1.6vw,18px);align-items:start}
-.shots img{width:100%;aspect-ratio:9/18;object-fit:cover;object-position:top;border-radius:10px}
+.shots img{width:100%;aspect-ratio:9/18;object-fit:cover;object-position:top;border-radius:10px;border:1px solid var(--rule)}
 
 .findings{margin-top:20px;border-top:1px solid var(--rule)}
 .findings div{display:grid;grid-template-columns:minmax(0,1fr) 92px;gap:16px;padding:10px 0;border-bottom:1px solid var(--rule);font:400 15px/1.45 var(--sans)}
@@ -72,7 +72,7 @@ figcaption{margin-top:10px}
 .pull{font-style:italic;font-size:clamp(30px,4.6vw,52px);line-height:1.12;letter-spacing:-0.02em;max-width:14em}
 
 /* watch demo */
-.lab{display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(24px,5vw,56px);align-items:center}
+.lab{padding:clamp(8px,2vw,16px) 0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(24px,5vw,56px);align-items:center}
 .watch{width:280px;max-width:100%;aspect-ratio:1;position:relative;border-radius:48px;background:#0A0F1E;padding:17px;box-shadow:0 0 0 6px #2b2e36,0 0 0 7px #3b3f48}
 .screen{width:100%;height:100%;background:var(--watch);border-radius:32px;display:flex;flex-direction:column;gap:5px;padding:10px;position:relative;user-select:none;-webkit-user-select:none;touch-action:manipulation}
 .disp{background:#0A1226;border-radius:7px;color:#E6ECFF;font:500 12px/1 var(--mono);padding:7px 8px;white-space:nowrap;overflow:hidden;direction:rtl;text-align:left;height:26px}
@@ -103,12 +103,11 @@ figcaption{margin-top:10px}
 
 /* other work */
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(40px,6vw,64px) clamp(20px,3vw,32px);margin-bottom:clamp(80px,12vw,140px)}
-.grid .plate{aspect-ratio:4/3;display:flex;justify-content:center;align-items:flex-end;gap:10px;padding:clamp(16px,3vw,32px) clamp(16px,3vw,32px) 0;overflow:hidden}
-.grid .plate img{height:100%;width:auto;object-fit:cover;object-position:top;border-radius:8px 8px 0 0}
-.grid .plate.full{padding:0}
-.grid .plate.full img{width:100%;height:100%;border-radius:0}
-.grid .plate.type{align-items:center;padding:24px;flex-direction:column;justify-content:center}
-.grid .wide{grid-column:1/-1}.grid .wide .plate{aspect-ratio:16/9}
+.grid .plate{height:clamp(260px,30vw,360px);display:flex;align-items:flex-end;gap:12px}
+.grid .plate img{height:100%;width:auto;max-width:100%;object-fit:contain;object-position:left bottom}
+.grid .plate.full img{width:100%;height:100%;object-fit:cover;object-position:top;border:1px solid var(--rule);border-radius:6px}
+.grid .plate.type{flex-direction:column;align-items:flex-start;justify-content:flex-end}
+.grid .wide{grid-column:1/-1}.grid .wide .plate{height:auto}.grid .wide .plate img{width:100%;height:auto}
 .grid h3{font-size:20px;margin-top:16px}
 .grid p{font-size:16px;color:var(--ink-2);margin-top:4px}
 
@@ -181,7 +180,7 @@ figcaption{margin-top:10px}
 
   <article class="proj">
     <figure>
-      <div class="plate" style="padding:clamp(32px,6vw,64px) clamp(24px,6vw,72px)"><p class="number">0<span> of 12</span></p></div>
+      <div class="plate"><p class="number">0<span> of 12</span></p></div>
       <figcaption class="small">Participants who noticed what ChatGPT's summary left out.</figcaption>
     </figure>
     <div class="col">
@@ -230,7 +229,7 @@ figcaption{margin-top:10px}
 
   <article class="proj">
     <figure>
-      <div class="plate" style="padding:clamp(40px,8vw,96px) clamp(24px,6vw,72px)"><p class="pull">“Take iron for a week, feel awful, quit.”</p></div>
+      <div class="plate"><p class="pull">“Take iron for a week, feel awful, quit.”</p></div>
       <figcaption class="small">The line that kept coming up across 3,600 posts and reviews.</figcaption>
     </figure>
     <div class="col">
@@ -265,7 +264,7 @@ figcaption{margin-top:10px}
       <p>ProdHacks 2026. Sizing that learns from returns, without a body scan.</p>
     </figure>
     <figure class="wide">
-      <div class="plate full"><img src="img/sidecar-blueprint.jpg?v=3" alt="Service blueprint for student club catering" loading="lazy" style="object-position:left top"></div>
+      <div class="plate full"><img src="img/sidecar-blueprint.jpg?v=3" alt="Service blueprint for student club catering" loading="lazy"></div>
       <h3>Sidecar</h3>
       <p>A service blueprint for catering to student clubs, with pilot events.</p>
     </figure>
@@ -276,8 +275,8 @@ figcaption{margin-top:10px}
   <span class="small">Experience</span>
   <div class="xp col" style="max-width:760px">
     <div><span><b>Oryn</b> <em>Founder</em></span><time>Aug 2026 – now</time></div>
-    <div><span><b>Terac</b> <em>Product, Finance AI</em></span><time>Sep – Nov 2026</time></div>
     <div><span><b>CMU Business Technology Group</b> <em>Director, Product Management Academy</em></span><time>Sep 2025 – now</time></div>
+    <div><span><b>Terac</b> <em>Product, Finance AI</em></span><time>Sep – Nov 2026</time></div>
     <div><span><b>Perflection AI</b> <em>Product Strategy Consultant</em></span><time>Feb – May 2026</time></div>
     <div><span><b>AfterQuery (YC W25)</b> <em>Product &amp; Finance Analyst</em></span><time>Apr – Aug 2025</time></div>
     <div><span><b>AugCap LLC</b> <em>Investment &amp; Product Strategy Analyst</em></span><time>Jun – Aug 2024</time></div>
