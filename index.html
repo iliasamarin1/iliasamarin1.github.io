@@ -5,20 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Ilia Samarin</title>
 <meta name="description" content="Ilia Samarin studies business and human-computer interaction at Carnegie Mellon. Product research, specs and prototypes.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap">
 <style>
 :root{
-  --paper:#f6f5f1; --plate:#ebe9e3; --ink:#1b1b19; --ink-2:#64625c; --ink-3:#8f8c84; --rule:#dcd9d1;
+  --paper:#ffffff; --plate:#f3f3f3; --ink:#111111; --ink-2:#555555; --ink-3:#8a8a8a; --rule:#e6e6e6;
   --watch:#0F1A33; --key:#24314F; --key-hi:#33446B; --del:#D9483B; --space:#2F6BEA; --sugg:#3E8BFF; --ok:#1d7a46; --bad:#b8352a;
-  --serif:"Newsreader", Georgia, "Times New Roman", serif;
+  --serif:-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   --sans:-apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
   --mono:ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   color-scheme:light;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--paper);color:var(--ink);font:400 18px/1.6 var(--serif);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.6 var(--serif);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 img{max-width:100%;display:block}
 h1,h2,h3,p,figure{margin:0}
 h1,h2,h3{font-weight:500;letter-spacing:-0.01em}
@@ -41,14 +38,14 @@ a:hover{text-decoration-color:var(--ink)}
 .intro{padding:clamp(48px,10vw,120px) 0 clamp(56px,9vw,104px)}
 .face{width:64px;height:64px;border-radius:50%;background:#dcdad3;overflow:hidden;margin-bottom:28px}
 .face img{width:100%;margin-top:4px}
-.intro h1{font-size:clamp(30px,4.2vw,42px);line-height:1.2;letter-spacing:-0.02em}
-.intro h1 em{color:var(--ink-2)}
+.intro h1{font-size:clamp(26px,3.4vw,34px);line-height:1.25;letter-spacing:-0.02em}
 .intro p{margin-top:22px;color:var(--ink-2)}
 .intro .links{margin-top:28px;display:flex;gap:22px;flex-wrap:wrap;font:400 15px/1.4 var(--sans)}
 
 /* sections */
 .sec{border-top:1px solid var(--rule);padding:22px 0 0}
-.sec > .small{display:block;margin-bottom:clamp(36px,6vw,64px)}
+.sh{font:600 17px/1.3 var(--sans);letter-spacing:0;margin-bottom:clamp(36px,6vw,64px)}
+.foot .sh{margin-bottom:0}
 
 /* project */
 .proj{margin-bottom:clamp(80px,12vw,140px)}
@@ -69,7 +66,7 @@ figcaption{margin-top:10px}
 .number{font-size:clamp(88px,15vw,168px);line-height:.9;letter-spacing:-0.04em;font-weight:400}
 .number span{font-size:.35em;color:var(--ink-2);letter-spacing:-0.01em}
 
-.pull{font-style:italic;font-size:clamp(30px,4.6vw,52px);line-height:1.12;letter-spacing:-0.02em;max-width:14em}
+.pull{font-weight:500;font-size:clamp(26px,3.6vw,40px);line-height:1.2;letter-spacing:-0.02em;max-width:16em}
 
 /* watch demo */
 .lab{padding:clamp(8px,2vw,16px) 0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:clamp(24px,5vw,56px);align-items:center}
@@ -146,13 +143,13 @@ figcaption{margin-top:10px}
 
 <section class="intro col">
   <div class="face"><img src="img/ilia.png?v=4" alt="Portrait of Ilia Samarin"></div>
-  <h1>I study business and human-computer interaction at Carnegie Mellon. <em>I like finding out what people actually do with a product, then deciding what to build.</em></h1>
+  <h1>I study business and human-computer interaction at Carnegie Mellon, and I like finding out how people use a product before deciding what to build.</h1>
   <p>Right now I direct CMU's Product Management Academy and run <a href="https://www.oryn-shop.com/" target="_blank" rel="noopener">Oryn</a>, a supplement brand I started this year. I'm looking for a product management internship for summer 2027.</p>
   <div class="links"><a href="mailto:isamarin@andrew.cmu.edu">Email</a><a href="https://www.linkedin.com/in/iliasamarin" target="_blank" rel="noopener">LinkedIn</a><a href="Ilia_Samarin_Resume.pdf" target="_blank" rel="noopener">Résumé</a></div>
 </section>
 
 <section class="sec" id="work">
-  <span class="small">Selected work</span>
+  <h2 class="sh">Selected work</h2>
 
   <article class="proj">
     <figure>
@@ -167,7 +164,7 @@ figcaption{margin-top:10px}
     </figure>
     <div class="col">
       <h2>SneakySwing: the founders' biggest bet was wrong</h2>
-      <p class="small meta">Perflection AI · Discovery lead · Spring 2026</p>
+      <p class="small meta">Discovery lead for Perflection AI, spring 2026</p>
       <p>SneakySwing is an AI golf coach with a live MVP. I led a team of five through eleven interviews, seven of them on the course, to test what the founders believed about their users.</p>
       <div class="findings">
         <div><span>The app is easy to use</span><span>Partly</span></div>
@@ -179,14 +176,10 @@ figcaption{margin-top:10px}
   </article>
 
   <article class="proj">
-    <figure>
-      <div class="plate"><p class="number">0<span> of 12</span></p></div>
-      <figcaption class="small">Participants who noticed what ChatGPT's summary left out.</figcaption>
-    </figure>
     <div class="col">
-      <h2>Do students notice when ChatGPT is wrong?</h2>
-      <p class="small meta">Usability study · Heuristic evaluation lead</p>
-      <p>Mostly, no. In our twelve-person study, only four checked the source, and nine said the task felt easy. Long, tidy answers hide what's missing: people skim the bold text and trust the structure. Since speed is the reason students use it, any fix has to add almost no friction.</p>
+      <h2 style="margin-top:0">Do students notice when ChatGPT is wrong?</h2>
+      <p class="small meta">Usability study, where I led the heuristic evaluation</p>
+      <p>In our twelve-person study, none of the students noticed what ChatGPT's summary left out. Only four checked the source, and nine said the task felt easy. Long, tidy answers hide what's missing: people skim the bold text and trust the structure. Since speed is the reason students use it, any fix has to add almost no friction.</p>
     </div>
   </article>
 
@@ -218,12 +211,12 @@ figcaption{margin-top:10px}
           </div>
         </div>
       </div>
-      <figcaption class="small">The final prototype. It works, so try it.</figcaption>
+      <figcaption class="small">The final prototype, which you can type on here.</figcaption>
     </figure>
     <div class="col">
       <h2>Typing on a one-inch screen</h2>
-      <p class="small meta">Smartwatch keyboard · Designed, built and tested</p>
-      <p>Three rounds of testing. The decision I'm proudest of was removing something: the OK button added a tap to every phrase and prevented nothing. The final version reached 8.5–10.6 words per minute with zero errors.</p>
+      <p class="small meta">Smartwatch keyboard that I designed, built and tested</p>
+      <p>I ran three rounds of testing, and the decision I'm proudest of was removing something: the OK button added a tap to every phrase and prevented nothing. The final version reached 8.5–10.6 words per minute with zero errors.</p>
     </div>
   </article>
 
@@ -234,19 +227,19 @@ figcaption{margin-top:10px}
     </figure>
     <div class="col">
       <h2>Oryn, built from what customers already said</h2>
-      <p class="small meta">Founder · 2026 · <a href="https://www.oryn-shop.com/" target="_blank" rel="noopener">oryn-shop.com</a></p>
-      <p>Before building anything, I read Reddit, YouTube, TikTok and Amazon reviews from women who are tired in a way sleep doesn't fix. Her real competitor isn't another brand; it's quitting. So the product is a gentle once-a-day formula sold in multi-month plans, written in her words. When no supplier could make the first version, I cut scope and launched anyway.</p>
+      <p class="small meta">Founder, 2026, <a href="https://www.oryn-shop.com/" target="_blank" rel="noopener">oryn-shop.com</a></p>
+      <p>Before building anything, I read Reddit, YouTube, TikTok and Amazon reviews from women who are tired in a way sleep doesn't fix. Her biggest competitor isn't another brand; it's quitting. So the product is a gentle once-a-day formula sold in multi-month plans, written in her words. When no supplier could make the first version, I cut scope and launched anyway.</p>
     </div>
   </article>
 </section>
 
 <section class="sec">
-  <span class="small">Other projects</span>
+  <h2 class="sh">Other projects</h2>
   <div class="grid">
     <figure>
       <div class="plate"><img src="img/mentorship-hub.jpg?v=3" alt="Mentorship Hub mockup" loading="lazy"></div>
       <h3>LinkedIn Mentorship Hub</h3>
-      <p>A product spec for Gen Z mentoring. Success means two real conversations in 30 days, not signups.</p>
+      <p>A product spec for Gen Z mentoring. Success means two conversations in 30 days, not signups.</p>
     </figure>
     <figure>
       <div class="plate"><img src="img/chefstack-lofi.jpg?v=3" alt="Chefstack wireframe" loading="lazy"><img src="img/chefstack-final.jpg?v=3" alt="Chefstack final design" loading="lazy"></div>
@@ -259,20 +252,16 @@ figcaption{margin-top:10px}
       <p>Finding a study group. Red is reserved for actions and alerts.</p>
     </figure>
     <figure>
-      <div class="plate type"><p class="number" style="font-size:clamp(56px,8vw,88px)">$890B</p><p class="small" style="margin-top:8px">U.S. apparel returns per year</p></div>
-      <h3>Fiturnly</h3>
-      <p>ProdHacks 2026. Sizing that learns from returns, without a body scan.</p>
-    </figure>
-    <figure class="wide">
-      <div class="plate full"><img src="img/sidecar-blueprint.jpg?v=3" alt="Service blueprint for student club catering" loading="lazy"></div>
+      <div class="plate"><img src="img/sidecar-blueprint.jpg?v=3" alt="Service blueprint for student club catering" loading="lazy"></div>
       <h3>Sidecar</h3>
       <p>A service blueprint for catering to student clubs, with pilot events.</p>
     </figure>
   </div>
+  <p class="col" style="margin:calc(-1 * clamp(40px,8vw,100px)) 0 clamp(80px,12vw,140px);color:var(--ink-2)">Also <b style="color:var(--ink);font-weight:500">Fiturnly</b>, from ProdHacks 2026: sizing that learns from returns without a body scan, aimed at the $890B a year that U.S. apparel returns cost.</p>
 </section>
 
 <section class="sec" id="experience">
-  <span class="small">Experience</span>
+  <h2 class="sh">Experience</h2>
   <div class="xp col" style="max-width:760px">
     <div><span><b>Oryn</b> <em>Founder</em></span><time>Aug 2026 – now</time></div>
     <div><span><b>CMU Business Technology Group</b> <em>Director, Product Management Academy</em></span><time>Sep 2025 – now</time></div>
@@ -284,9 +273,9 @@ figcaption{margin-top:10px}
 </section>
 
 <footer class="foot" id="contact">
-  <span class="small">Contact</span>
+  <h2 class="sh">Contact</h2>
   <p class="col">The best way to reach me is <a id="email" href="mailto:isamarin@andrew.cmu.edu">isamarin@andrew.cmu.edu</a>. <button class="textbtn" id="copyBtn" type="button" style="font-size:14px">Copy</button></p>
-  <div class="row2 small"><span>Pittsburgh, PA</span><span><a href="https://www.linkedin.com/in/iliasamarin" target="_blank" rel="noopener">LinkedIn</a> · <a href="Ilia_Samarin_Resume.pdf" target="_blank" rel="noopener">Résumé</a></span></div>
+  <div class="row2 small"><span>Pittsburgh, PA</span><span><a href="https://www.linkedin.com/in/iliasamarin" target="_blank" rel="noopener">LinkedIn</a>&nbsp;&nbsp;&nbsp;<a href="Ilia_Samarin_Resume.pdf" target="_blank" rel="noopener">Résumé</a></span></div>
 </footer>
 
 </div>
